@@ -1,0 +1,39 @@
+<form class="form-inline" [formGroup]="imageForm">
+    <div class="row">
+        <div class="form-group mx-sm-3 mb-2 col-7">
+            <div class="row">
+                <nz-form-item class="row">
+                    <nz-form-control nzErrorTip="Ảnh không được để trống." nzHasFeedback>
+                      <input nz-input formControlName="image" placeholder="nhập link ảnh ở đây" class="form-control">
+                    </nz-form-control>
+                  </nz-form-item>
+            </div>
+          </div>
+        <button class="btn btn-primary mb-2 ms-3 col-4" style="height: 40px; margin-top: 9px; width: 95px;"
+            (click)="addImage()">Thêm ảnh</button>
+    </div>
+</form>
+<div class="table-responsive table-hover table-sales">
+    <nz-table #basicTable [nzData]="dataImage">
+        <thead>
+            <tr>
+                <th>Link</th>
+                <th>Ảnh</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td><a href="{{data.image}}">link</a></td>
+                <td><img width="50px" height="50px" src="{{data.image}}" alt=""></td>
+                <td>
+                    <button class="btn btn-sm btn-outline-danger" placement="left"
+                        style="margin-right: 0.5rem;" nzType="dashed"
+                        (click)="showConfirm(data.product_image_id)">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

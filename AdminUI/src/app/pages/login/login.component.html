@@ -1,0 +1,23 @@
+<div class="wrapper fadeInDown">
+	<div id="formContent">
+	  <!-- Tabs Titles -->
+	  <h2 class="active"> Sign In </h2>
+  
+	  <!-- Icon -->
+	  <div class="fadeIn first">
+		<!-- <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" /> -->
+		<i class="login__icon fas fa-lock"></i>
+	  </div>
+  
+	  <!-- Login Form -->
+	  <form class="form-horizontal" [formGroup]="LoginForm">
+		<div class="col-md-12">
+			<input type="text" id="login" style="margin: 0 auto; height: 40px; border-radius: 5px;" class="col-md-6 fadeIn second" formControlName="UserName" placeholder="User name">
+		</div>
+		<div class="col-md-12" style="margin-top: 10px;">
+			<input type="password" id="login" style="margin: 0 auto; height: 40px; border-radius: 5px;" class="col-md-6 fadeIn second" formControlName="Password" placeholder="Password">
+		</div>
+		<input type="submit" class="fadeIn fourth" value="LogIn" (click)="logIn()">
+	  </form>
+	</div>
+  </div>

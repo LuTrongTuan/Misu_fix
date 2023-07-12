@@ -1,0 +1,103 @@
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Blog cá nhân</h2>
+                    <h5 class="text-white op-7 mb-2">Trang chủ/Admin/Blog cá nhân</h5>
+                </div>
+                <div class="ml-md-auto py-2 py-md-0">
+                    <a href="javascript:void(0)" class="btn btn-secondary btn-round"
+                        (click)="showAddModal('Add', null)">Thêm mới</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive table-hover table-sales">
+                                    <div class="col-md-12">
+                                        <input type="text" style="float: right; margin-bottom: 10px;"
+                                            placeholder="Tìm kiếm nhanh..." [(ngModel)]="searchString"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                    <nz-table #basicTable [nzData]="listBlog">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Ngày tạo</th>
+                                                <th>Tiêu đề</th>
+                                                <th>Mô tả</th>
+                                                <th>Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of basicTable.data | filter:searchString">
+                                                <td>{{ data.blog_id }}</td>
+                                                <td>{{ data.created_at | date: 'dd/MM/yyyy hh:mm:aa'}}</td>
+                                                <td>{{ data.title }}</td>
+                                                <td>{{ data.descript }}</td>
+                                                <td style="white-space: nowrap;">
+                                                    <button class="btn btn-sm btn-outline-danger" placement="left"
+                                                        style="margin-right: 0.5rem;" nzType="dashed"
+                                                        (click)="showConfirm(data.blog_id)">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-warning" placement="left"
+                                                        style="margin-right: 0.1rem;" nzType="dashed"
+                                                        (click)="showContentModal(data.content_html)">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </nz-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="isDisplay" [nzTitle]="titleModal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <form class="form-horizontal" [formGroup]="AddForm">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nz-form-item class="row">
+                            <label style="margin-top: 10px;">Tiêu đề</label>
+                            <nz-form-control nzErrorTip="Không được để trống." nzHasFeedback>
+                                <input nz-input formControlName="title" placeholder="nhập..." class="form-control">
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-form-item class="row">
+                            <label style="margin-top: 10px;">Mô tả</label>
+                            <nz-form-control nzErrorTip="Không được để trống." nzHasFeedback>
+                                <input nz-input formControlName="descrip" placeholder="nhập..." class="form-control">
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <ckeditor [(ngModel)]="dataBlog"></ckeditor>
+    </ng-container>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isDisplayContent" [nzTitle]="titleModal" (nzOnCancel)="handleCancel()">
+    <ng-container *nzModalContent>
+        <div [innerHTML]="dataBlog"></div>
+    </ng-container>
+</nz-modal>

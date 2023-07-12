@@ -1,0 +1,41 @@
+<form class="form-inline" [formGroup]="AddForm">
+    <div class="row">
+        <div class="form-group mx-sm-3 mb-2 col-7">
+            <div class="row">
+                <div class="form-group">
+                    <nz-form-item class="row">
+                        <label class="col-md-10">Mô tả</label>
+                        <nz-form-control nzErrorTip="Mô tả không được để trống" nzHasFeedback>
+                            <textarea class="form-control" formControlName="detail" id="exampleFormControlTextarea1"
+                                maxlength="100" rows="2"></textarea>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+            </div>
+        </div>
+        <button class="btn btn-primary mb-2 col-4" (click)="addDetail()"
+            style="height: 40px; margin-top: 40px; width: 113px;">Thêm mô tả</button>
+    </div>
+</form>
+<div class="table-responsive table-hover table-sales">
+    <nz-table #basicTable [nzData]="dataDetail">
+        <thead>
+            <tr>
+                <th>Mô tả</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{data.detail}}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-danger" placement="left" style="margin-right: 0.5rem;"
+                        nzType="dashed" (click)="showConfirm(data.product_detail_id)">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
