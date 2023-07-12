@@ -1,0 +1,264 @@
+<section class="page-header">
+  <div class="overly"></div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="content text-center">
+          <h1 class="mb-3">Chi tiết sản phẩm</h1>
+          <p>Cửa hàng của chúng tôi luôn luôn đặt chất lượng sản phẩm lên hàng đầu với 100% là hàng chính hãng.</p>
+
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent justify-content-center">
+              <li class="breadcrumb-item"><a routerLink="/">Trang chủ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Chi tiết sản phẩm {{product?.product_name}}</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="single-product">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5">
+        <div class="single-product-slider">
+          <div class="carousel slide" data-ride="carousel" id="single-product-slider">
+            <div class="carousel-inner">
+              <div class="carousel-item active" *ngFor="let img of listPImage">
+                <img src="http://localhost:4200{{img.image}}" alt="" class="img-fluid">
+              </div>
+            </div>
+
+            <ol class="carousel-indicators">
+              <li data-target="#single-product-slider" data-slide-to="0" class="active"
+                *ngFor="let img of listPImage; let i=index">
+                <img src="http://localhost:4200{{img.image}}" style="width:100px;height:100px" alt="" class="img-fluid">
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-7">
+        <div class="single-product-details mt-5 mt-lg-0">
+          <h2>{{product?.product_name}}</h2>
+          <div class="sku_wrapper mb-4">
+            Mã sản phẩm: <span class="text-muted">{{product?.product_code}} </span><br>
+            Thương hiệu: <span class="text-muted">{{product?.brand_name}} </span><br>
+            Loại sản phẩm: <span class="text-muted">{{product?.category_name}} </span><br>
+            Số lượng kho: <span class="text-muted">{{product?.amount}} </span>
+          </div>
+
+          <hr>
+
+          <h3 class="product-price">{{product?.price | number}} &nbsp;<del>{{(product?.price + product?.price/2) |
+              number}}</del>VNĐ</h3>
+
+          <p class="product-description my-4 " *ngFor="let d of listPDetail">
+            {{d.detail}}
+          </p>
+
+          <form class="cart" action="#" method="post">
+            <div class="quantity d-flex align-items-center">
+              <input [ngModelOptions]="{standalone: true}" [(ngModel)]="countP" type="number" id="#"
+                class="input-text qty text form-control w-25 mr-3" step="1" min="1" max="9" name="quantity" value="1"
+                title="Qty" size="4">
+              <a href="javascript:void(0)" (click)="confirmProduct(product)" class="btn btn-main btn-small">Xác nhận</a>&nbsp;&nbsp;&nbsp;
+              <a href="javascript:void(0)" (click)="addToCart(product)" class="btn btn-main btn-small">Thêm vào giỏ</a>
+            </div>
+          </form>
+
+
+          <div class="product-size d-flex align-items-center mt-4">
+            <span class="font-weight-bold text-capitalize product-meta-title">Màu sắc:</span>
+
+            <div class="form-check" *ngFor="let s of listPColor; let i=index" style="margin-right: 10px;">
+              <input class="form-check-input" type="radio" value="{{s}}" name="flexRadioDefault"
+                id="flexRadioDefault{{i+1}}" style="width: 20px; height: 20px" (change)="getColor($event.target)">
+              <label class="form-check-label" for="flexRadioDefault{{i+1}}">
+                <div [style.background-color]="s" style="width: 20px; height: 20px"></div>
+              </label>
+            </div>
+          </div>
+
+          <div class="product-size d-flex align-items-center mt-4">
+            <span class="font-weight-bold text-capitalize product-meta-title">Kích cỡ:</span>
+            <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="sizePick">
+              <option value="">size</option>
+              <option *ngFor="let s of listSize" value="{{s}}">{{s}}</option>
+            </select>
+          </div>
+
+          <div class="products-meta mt-4">
+            <div class="product-share mt-5">
+              <ul class="list-inline">
+                <li class="list-inline-item">
+                  <a href="#"><i class="tf-ion-social-facebook"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#"><i class="tf-ion-social-twitter"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#"><i class="tf-ion-social-linkedin"></i></a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#"><i class="tf-ion-social-pinterest"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-lg-12">
+        <nav class="product-info-tabs wc-tabs mt-5 mb-5">
+          <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+              aria-controls="nav-home" aria-selected="true">Mô tả sản phẩm</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+              aria-controls="nav-profile" aria-selected="false">Thông tin sản phẩm</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+              aria-controls="nav-contact" aria-selected="false">Nhận xét</a>
+          </div>
+        </nav>
+
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <h4>Thông tin mô tả</h4>
+
+            <ul class="" *ngFor="let d of listPDetail">
+              <li>{{d.detail}}</li>
+            </ul>
+
+          </div>
+          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+            <ul class="list-unstyled info-desc">
+              <li class="d-flex">
+                <strong>Khối lượng </strong>
+                <span>400 g</span>
+              </li>
+              <li class="d-flex">
+                <strong>Kích thước </strong>
+                <span>10 x 10 x 15 cm</span>
+              </li>
+              <li class="d-flex">
+                <strong>Chất liệu</strong>
+                <span>60% cotton, 40% kaki</span>
+              </li>
+              <li class="d-flex">
+                <strong>Màu sắc </strong>
+                <span>{{colorString}}</span>
+              </li>
+              <li class="d-flex">
+                <strong>Kích cỡ</strong>
+                <span>{{product?.size}}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+            <div class="row">
+              <div class="col-lg-7">
+                <div *ngFor="let cmt of lstCommentByAccount | paginate: {
+                  itemsPerPage: 3,
+                  currentPage: page,
+                  totalItems: count
+                }; let i=index" class="media review-block mb-4">
+                  <button (click)="deleteComment(cmt.comment_id)" *ngIf="accountId == cmt.account_id"
+                    class="btn-danger btn-sm">Delete</button>
+                  <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png  "
+                    alt="reviewimg" class="img-fluid mr-4">
+                  <div class="media-body">
+                    <div class="product-review">
+                      {{cmt.star}}/5<span><i class="tf-ion-android-star"></i></span>
+                    </div>
+                    <h6>{{cmt?.user_name}} <span class="text-sm text-muted font-weight-normal ml-3">{{cmt.created_at |
+                        date:'dd/MM/yyyy hh:mm:aa'}}</span></h6>
+                    <p>{{cmt.comment1}}</p>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                      <div class="d-flex justify-content-center">
+                        <pagination-controls previousLabel="Trước" nextLabel="Tiếp"
+                          (pageChange)="onTableDataChange($event)">
+                        </pagination-controls>
+                      </div>
+                    </ul>
+                  </nav>
+                </div>
+
+              </div>
+
+
+              <div class="col-lg-5">
+                <div class="review-comment mt-5 mt-lg-0">
+                  <h4 class="mb-3">Thêm nhận xét</h4>
+
+                  <form action="#">
+                    <div class="starrr"></div>
+                    <div class="form-group">
+                      <ul class="list-inline rating-list" *ngFor="let star of stars; let i= index">
+                        <li (click)="countStar(star)" [ngClass]="{'selected': (star <= selectedValue)}"
+                          (mouseover)="addClass(star)" (mouseout)="removeClass()"> <span class="material-icons"><i
+                              class="fa fa-star"></i></span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="form-group">
+                      <textarea name="comment" id="comment" class="form-control" cols="30" [(ngModel)]="comment"
+                        [ngModelOptions]="{standalone: true}" rows="4" placeholder="Nhận xét"></textarea>
+                    </div>
+
+                    <a href="javascript:void(0)" (click)="postCmt()" class="btn btn-main btn-small">Đăng</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="products related-products section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="title text-center">
+          <h2>Có thể bạn cũng thích</h2>
+          <p>Bán chạy nhất trong tuần</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngFor="let p of lstProductRecommend" class="col-lg-3 col-6">
+        <div class="product">
+          <div class="product-wrap">
+            <a routerLink="/product-single/{{p.product_id}}"><img style="height: 350px;"
+                class="img-fluid w-100 mb-3 img-first" [src]="getImageProduct(p.product_id)" alt="product-img" /></a>
+            <a routerLink="/product-single/{{p.product_id}}"><img style="height: 350px;"
+                class="img-fluid w-100 mb-3 img-second" [src]="getImageProduct(p.product_id)" alt="product-img" /></a>
+          </div>
+
+          <span class="onsale">Giảm giá</span>
+
+          <!-- <div class="product-info">
+            <h2 class="product-title h5 mb-0"><a routerLink="/product-single">{{p.product_name}}</a></h2>
+            <span class="price">
+              {{p.price | number}} VNĐ
+            </span>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

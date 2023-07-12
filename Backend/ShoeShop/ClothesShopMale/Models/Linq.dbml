@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MisuShop_V2" Class="LinqDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-TMI3G29\MSSQLSERVER03;Initial Catalog=MisuShop_V2;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="MisuShop_V2ConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Account" Member="Accounts">
+    <Type Name="Account">
+      <Column Name="account_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="admin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="avatar" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="full_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="role_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="user_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="town" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="district" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="city" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="town_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="district_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="city_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Account_Comment" Member="Comments" ThisKey="account_id" OtherKey="account_id" Type="Comment" />
+      <Association Name="Account_Order" Member="Orders" ThisKey="account_id" OtherKey="account_id" Type="Order" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Role" Member="Roles">
+    <Type Name="Role">
+      <Column Name="role_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="role_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="role_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Blog" Member="Blogs">
+    <Type Name="Blog">
+      <Column Name="blog_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="content_html" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="descript" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Brand" Member="Brands">
+    <Type Name="Brand">
+      <Column Name="brand_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="brand_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="brand_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="image" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Brand_Product" Member="Products" ThisKey="brand_id" OtherKey="brand_id" Type="Product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Category" Member="Categories">
+    <Type Name="Category">
+      <Column Name="category_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="category_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="category_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="image" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Category_Product" Member="Products" ThisKey="category_id" OtherKey="category_id" Type="Product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Comment" Member="Comments">
+    <Type Name="Comment">
+      <Column Name="comment_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="account_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="comment" Member="comment1" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="product_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="star" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Account_Comment" Member="Account" ThisKey="account_id" OtherKey="account_id" Type="Account" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Discount" Member="Discounts">
+    <Type Name="Discount">
+      <Column Name="discount_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="discount_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="discount_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="start_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="end_date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="value" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="product_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Product_Discount" Member="Product" ThisKey="product_id" OtherKey="product_id" Type="Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Orders" Member="Orders">
+    <Type Name="Order">
+      <Column Name="order_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="account_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cusomter_type" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="order_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="seller" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="phone_seller" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="coupon" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="payment_type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="bought_type" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="waiting" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="data_cart" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="full_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="note" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="order_item" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="type_payment" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fee_ship" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="id_city" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_district" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_ward" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="total" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Account_Order" Member="Account" ThisKey="account_id" OtherKey="account_id" Type="Account" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Product" Member="Products">
+    <Type Name="Product">
+      <Column Name="product_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="product_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="brand_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="category_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="origin" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="product_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Product_Discount" Member="Discounts" ThisKey="product_id" OtherKey="product_id" Type="Discount" />
+      <Association Name="Product_ProductAttribute" Member="ProductAttributes" ThisKey="product_id" OtherKey="product_id" Type="ProductAttribute" />
+      <Association Name="Product_ProductDetail" Member="ProductDetails" ThisKey="product_id" OtherKey="product_id" Type="ProductDetail" />
+      <Association Name="Product_ProductImage" Member="ProductImages" ThisKey="product_id" OtherKey="product_id" Type="ProductImage" />
+      <Association Name="Brand_Product" Member="Brand" ThisKey="brand_id" OtherKey="brand_id" Type="Brand" IsForeignKey="true" />
+      <Association Name="Category_Product" Member="Category" ThisKey="category_id" OtherKey="category_id" Type="Category" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductAttribute" Member="ProductAttributes">
+    <Type Name="ProductAttribute">
+      <Column Name="product_attribue_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="size" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="color" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="product_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="amount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Product_ProductAttribute" Member="Product" ThisKey="product_id" OtherKey="product_id" Type="Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductDetail" Member="ProductDetails">
+    <Type Name="ProductDetail">
+      <Column Name="product_detail_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="detail" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="product_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Product_ProductDetail" Member="Product" ThisKey="product_id" OtherKey="product_id" Type="Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductImage" Member="ProductImages">
+    <Type Name="ProductImage">
+      <Column Name="product_image_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="image" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="product_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Product_ProductImage" Member="Product" ThisKey="product_id" OtherKey="product_id" Type="Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.sp_Account_Load" Method="sp_Account_Load">
+    <ElementType Name="sp_Account_LoadResult">
+      <Column Name="account_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="admin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="avatar" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="full_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="role_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="user_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="town" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="district" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="city" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="town_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="district_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="city_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_ProductLoadListAll" Method="sp_ProductLoadListAll">
+    <ElementType Name="sp_ProductLoadListAllResult">
+      <Column Name="product_attribue_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="size" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="color" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="product_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="product_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="brand_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="category_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="origin" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="product_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="amount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_LoadOrder" Method="sp_LoadOrder">
+    <ElementType Name="sp_LoadOrderResult">
+      <Column Name="order_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="account_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cusomter_type" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="order_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="seller" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="phone_seller" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="coupon" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="payment_type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="bought_type" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="waiting" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="data_cart" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="full_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="note" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="order_item" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="type_payment" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fee_ship" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="id_city" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_district" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_ward" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="total" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_Account_Load" Method="sp_Account_Load1">
+    <ElementType Name="sp_Account_LoadResult1">
+      <Column Name="account_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="active" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="admin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="avatar" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="full_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="role_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="user_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="town" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="district" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="city" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="town_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="district_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="city_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_ProductLoadListAll" Method="sp_ProductLoadListAll1">
+    <ElementType Name="sp_ProductLoadListAllResult1">
+      <Column Name="product_attribue_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="size" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="color" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="product_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="product_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="brand_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="category_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="origin" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="product_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="amount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_LoadOrder" Method="sp_LoadOrder1">
+    <ElementType Name="sp_LoadOrderResult1">
+      <Column Name="order_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="account_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cusomter_type" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="order_code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="seller" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="phone_seller" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="coupon" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="payment_type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="bought_type" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="waiting" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="data_cart" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="full_name" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="note" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="order_item" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="status" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="type_payment" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fee_ship" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="id_city" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_district" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_ward" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="total" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="deleted_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="updated_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

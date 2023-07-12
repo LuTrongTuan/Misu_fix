@@ -1,0 +1,156 @@
+<section class="page-header">
+  <div class="overly"></div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="content text-center">
+          <h1 class="mb-3">Đơn hàng</h1>
+          <p>Quản lý đơn hàng</p>
+
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent justify-content-center">
+              <li class="breadcrumb-item"><a routerLink="/">Trang chủ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Đơn hàng</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="container-fluid">
+
+  <section class="user-dashboard page-wrapper">
+    <div class="container-fluid">
+      <div class="row" style="width: 90%; margin-left: 100px;">
+        <div class="col-12 col-md-5 col-sm-12 col-lg-3">
+          <div class="nav flex-column nav-pills">
+            <a class="nav-link active" routerLink="/order">Đơn hàng</a>
+          </div>
+        </div>
+        <div class="container">
+          <input style="margin: 20px 0" type="text" placeholder="Tìm kiếm nhanh..." class="form-control"
+            [(ngModel)]="searchString">
+          <button class="btn btn-sm-primary" (click)="exportOrder()" style="float: right;">Export <i
+              class="fa fa-print"></i></button>
+        </div>
+
+        <div class="col-12 col-md-12 col-sm-12 col-lg-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Mã HĐ</th>
+                <th scope="col">Thời gian</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col">Người nhận</th>
+                <th scope="col">SĐT</th>
+                <th scope="col">Tổng tiền</th>
+                <th scope="col">Địa chỉ</th>
+                <th scope="col">Loại thanh toán</th>
+                <th scope="col">Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let o of orderByAccount | filter:searchString | paginate: {
+                itemsPerPage: 10,
+                currentPage: page,
+                totalItems: count
+              }; let i=index">
+                <th scope="row">HD00{{o.order_id}}</th>
+                <td>{{o.created_at | date: 'dd/MM/yyyy'}}</td>
+                <td [style]="
+                  o.status == 0 ? 'font-weight: bold; color: #c7c726' : 
+                  o.status == 1 ? 'font-weight: bold; color: green' : 
+                  o.status == 2 ? 'font-weight: bold; color: green' : 
+                  o.status == 3 ? 'font-weight: bold; color: green' : 
+                  'font-weight: bold;color:red'">
+                  {{o.status == 0 ? 'Chờ xác nhận' : o.status == 1 ? 'Chờ lấy hàng' : o.status == 2 ? 'Đang giao' :
+                  o.status == 3 ? 'Giao thành công' : 'Đã huỷ'}}</td>
+                <td>{{o.full_name}}</td>
+                <td>{{o.phone}}</td>
+                <td>{{o.total + o.fee_ship | number}}</td>
+                <td>{{o.city_name}} - {{o.district_name}} - {{o.ward_name}}</td>
+                <td>{{o.status == 1 ? 'Tiền mặt' : 'Chuyển khoản'}}</td>
+                <td style="text-align: center;">
+                  <a href="javascript:void(0)" placement="left" style="margin-right: 0.5rem; color:blue" nzType="dashed"
+                    (click)="open(o)" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-eye"></i>
+                  </a>&nbsp;&nbsp;&nbsp;
+                  <a *ngIf="o.status <= 1" href="javascript:void(0)" placement="left"
+                    style="margin-right: 0.5rem; color:red" nzType="dashed" (click)="cancleOrder(o.order_id)">
+                    <i class="fa fa-ban"></i>
+                  </a>
+              </tr>
+              <tr>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-12">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <div class="d-flex justify-content-center">
+                <pagination-controls previousLabel="Trước" nextLabel="Tiếp" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="col-12 col-md-12 col-sm-12 col-lg-12">
+            <h5>Giá: {{orderDetail?.total ?? 0 | number}} VNĐ</h5>
+            <h5>Phí ship: {{orderDetail?.fee_ship ?? 0 | number}} VNĐ</h5>
+            <h5>Tổng tiền: {{orderDetail?.fee_ship ?? 0 | number}} VNĐ</h5>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Tên sản phẩm</th>
+                  <th scope="col">Số lượng</th>
+                  <th scope="col">Đơn giá</th>
+                  <th scope="col">Hình ảnh</th>
+                  <th scope="col">Size</th>
+                  <th scope="col">Màu sắc</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let oi of listOrderItem | filter:searchString | paginate: {
+                  itemsPerPage: 10,
+                  currentPage: page,
+                  totalItems: count
+                }; let i=index">
+                  <td>{{oi.product_name}}</td>
+                  <td>{{oi.amountCart}}</td>
+                  <td>{{oi.price | number}} VNĐ</td>
+                  <td><img src="{{oi.image}}" alt="" style="width: 50px;height:50px"></td>
+                  <td>{{oi.size}}</td>
+                  <td>
+                    <div [style.backgroundColor]="oi.color" style="width: 20px; height: 20px;"></div>
+                  </td>
+                </tr>
+                <tr>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">
+            <i class="far fa-times-circle"></i> Đóng
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
