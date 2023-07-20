@@ -204,26 +204,27 @@ export class OrderComponent extends BaseComponent implements OnInit {
     if (this.colorInput) {
       this.productFilter = this.listAllProduct.filter((x: any) => x.color == this.colorInput);
     }
+
     let listAttributeCartId = this.listProductCart.map((x: any) => x.product_attribue_id) ?? [];
-    for (let att of this.productFilter) {
-      if (!listAttributeCartId.includes(att.product_attribue_id)) {
-        if (this.productFilter) {
-          this.productFilter.forEach((p: any) => {
-            p.amountCart = 1;
-            p.totalPayment = 0;
-            p.totalPayment = (p.price * p.amountCart);
-            this.listProductCart.push(p);
-          })
-          this.toastr.success('Thêm sản phẩm thành công')
+
+    if (this.productFilter) {
+      this.productFilter.forEach((p: any) => {
+        if (!listAttributeCartId.includes(p.product_attribue_id)) {
+          p.amountCart = 1;
+          p.totalPayment = 0;
+          p.totalPayment = (p.price * p.amountCart);
+          this.listProductCart.push(p);
         }
         else {
-          this.toastr.warning('Không tìm thấy sản phẩm nào phù hợp');
+          this.toastr.warning('Sản phẩm này đã được thêm');
         }
-      }
-      else {
-        this.toastr.warning('Sản phẩm này đã được thêm');
-      }
+      })
+      this.toastr.success('Thêm sản phẩm thành công');
     }
+    else {
+      this.toastr.warning('Không tìm thấy sản phẩm nào phù hợp');
+    }
+
     return true;
   }
 
@@ -241,7 +242,7 @@ export class OrderComponent extends BaseComponent implements OnInit {
     return this.listAllProduct.filter((x: any) => x.product_attribue_id == data.product_attribue_id)[0].amount ?? 0;
   }
 
-  checkAmount(data:any) {
+  checkAmount(data: any) {
     if (this.listAllProduct.filter((x: any) => x.product_attribue_id == data.product_attribue_id)[0].amount - data.amountCart < 0) {
       this.toastr.warning('Số lượng sản phẩm cần mua đã vượt quá số lượng trong kho');
       data.amountCart = 1;

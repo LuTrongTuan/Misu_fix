@@ -36,8 +36,16 @@ namespace ClothesShopMale.Controllers
                             }).ToList();
                 foreach (var p in list)
                 {
-                    p.min_price = db.ProductAttributes.Where(x => x.product_id == p.product_id).OrderBy(m => m.price).FirstOrDefault().price ?? 0;
-                    p.max_price = db.ProductAttributes.Where(x => x.product_id == p.product_id).OrderByDescending(m => m.price).FirstOrDefault().price ?? 0;
+                    if (db.ProductAttributes.Where(x => x.product_id == p.product_id).Any())
+                    {
+                        p.min_price = db.ProductAttributes.Where(x => x.product_id == p.product_id).OrderBy(m => m.price).FirstOrDefault().price.GetValueOrDefault();
+                        p.max_price = db.ProductAttributes.Where(x => x.product_id == p.product_id).OrderByDescending(m => m.price).FirstOrDefault().price.GetValueOrDefault();
+                    }
+                    else
+                    {
+                        p.min_price = 0;
+                        p.max_price = 0;
+                    }
                 }
                 if (req != null)
                 {

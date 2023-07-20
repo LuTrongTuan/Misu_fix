@@ -74,6 +74,7 @@ namespace ClothesShopMale.Controllers
                     var order = db.Orders.Where(x => x.order_id == req.order_id).FirstOrDefault();
                     order.phone = req.phone;
                     order.cusomter_type = req.cusomter_type;
+                    order.full_name = req.full_name;
                     order.seller = req.seller;
                     order.phone_seller = req.seller;
                     order.id_city = req.id_city;
@@ -81,6 +82,7 @@ namespace ClothesShopMale.Controllers
                     order.id_ward = req.id_ward;
                     order.address = req.address;
                     order.waiting = req.waiting;
+                    order.status = req.status;
                     order.note = req.note;
                     order.updated_at = DateTime.Now;
                     order.type = 2;
