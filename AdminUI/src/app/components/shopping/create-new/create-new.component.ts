@@ -159,7 +159,7 @@ export class CreateNewComponent extends BaseComponent implements OnInit {
     }
     this.orderInfo.seller = this.full_name;
     this.orderInfo.total = this.totalPayment;
-    this.orderInfo.order_item = JSON.stringify(this.listProductCart);
+    this.orderInfo.order_item = JSON.stringify(this.listProductCart.filter((x: any) => x.checked == true));
     this.orderInfo.type = 2;
     this.orderService.createOrderInfor(this.orderInfo).subscribe(
       (res: any) => {

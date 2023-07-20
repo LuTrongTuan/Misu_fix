@@ -111,7 +111,7 @@ export class ProductComponent extends BaseComponent implements OnInit {
       this.productService.getListAll().subscribe(
         (res) => {
           this.listAllProduct = res.data;
-          if (this.listAllProduct.filter((x: any) => x.size == req.size && x.color == req.color).length > 0) {
+          if (this.listAllProduct.filter((x: any) => x.size == req.size && x.color == req.color && x.product_id == this.selected_ID).length > 0) {
             this.toastr.warning('Sản phẩm này đã được thêm màu và size');
             return false;
           }
@@ -177,6 +177,7 @@ export class ProductComponent extends BaseComponent implements OnInit {
   }
 
   showAttribute(dataEdit: any): void {
+    this.isEdit = false;
     this.selected_ID = dataEdit.product_id;
     this.isDisplayAttribute = true;
     this.productService.getImage().subscribe(

@@ -219,7 +219,7 @@
                                                         <tr *ngFor="let c of listProductCart; let i=index">
                                                             <th scope="row">{{i+1}}</th>
                                                             <td>{{c.product_name}}</td>
-                                                            <td><input style="width: 50px;" type="number"
+                                                            <td style="white-space: nowrap;"><input style="width: 50px;" type="number"
                                                                     (keyup)="checkAmount(c)"
                                                                     [(ngModel)]="c.amountCart">/{{c.amount}}
                                                             </td>
