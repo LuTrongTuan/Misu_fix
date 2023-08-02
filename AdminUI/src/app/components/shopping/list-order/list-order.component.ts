@@ -131,7 +131,7 @@ export class ListOrderComponent extends BaseComponent implements OnInit {
     this.listProductCart = JSON.parse(hd.order_item);
     this.listProductCart.forEach(
       (x: any) => {
-        x.amount_bought = x.amountCart;
+        x.amountBought = x.amountCart > 0 ? x.amountCart : 0;
       }
     );
     this.listProductBought = this.listProductCart;
@@ -139,30 +139,31 @@ export class ListOrderComponent extends BaseComponent implements OnInit {
     this.sumCart();
     this.selected_ID = hd.order_id;
     this.status_order = hd.status;
+    console.log(this.listProductCart);
   }
 
   changeSum(data: any) {
-    let p = this.listAllProduct.filter((x: any) => x.product_attribue_id == data.product_attribue_id)[0];
     this.productService.checkCountStock(data).subscribe(
       (res) => {
         if (res.status == 400) {
-          this.toastr.warning('Số lượng sản phẩm cần mua đã vượt quá số lượng trong kho');
+          alert('Số lượng sản phẩm cần mua đã vượt quá số lượng trong kho');
           data.amountCart = 1;
-          this.productService.getListAll().subscribe(
-            (res) => {
-              this.listAllProduct.filter((x: any) => x.product_attribue_id == p.product_attribue_id)[0].amount = res.data.filter((x: any) => x.product_attribue_id == p.product_attribue_id)[0].amount - 1;
-            });
-          this.sumCart();
+          this.calculator(data);
         }
         else {
-          this.productService.getListAll().subscribe(
-            (res) => {
-              this.listAllProduct.filter((x: any) => x.product_attribue_id == p.product_attribue_id)[0].amount = res.data.filter((x: any) => x.product_attribue_id == p.product_attribue_id)[0].amount - data.amountCart;
-            });
-          this.sumCart();
+          this.calculator(data);
         }
       }
     );
+  }
+
+  calculator(pro: any) {
+    this.productService.getListAll().subscribe(
+      (res) => {
+        let p = res.data.filter((x: any) => x.product_attribue_id == pro.product_attribue_id)[0];
+        this.listAllProduct.filter((x: any) => x.product_attribue_id == pro.product_attribue_id)[0].amount = p.amount - pro.amountCart + pro.amountBought;
+      });
+    this.sumCart();
   }
 
   showDeleteConfirm(hd: any): void {
@@ -283,13 +284,13 @@ export class ListOrderComponent extends BaseComponent implements OnInit {
     }
     else {
       var pAmount = this.listProductBought.filter((x: any) => x.product_attribue_id == p.product_attribue_id)[0];
-      p.amountCart = pAmount?.amount_bought ? pAmount.amount_bought : 1;
-      p.amount_bought = pAmount?.amount_bought ? pAmount.amount_bought : p.amountCart;
+      p.amountCart = pAmount?.amountBought ? pAmount.amountBought : 1;
+      p.amountBought = pAmount?.amountBought ? pAmount.amountBought : 0;
       p.totalPayment = 0;
       p.totalPayment = (p.price * p.amountCart);
       this.total += p.totalPayment;
       this.listProductCart.push(p);
-      this.listAllProduct.filter((x: any) => x.product_attribue_id == p.product_attribue_id)[0].amount -= p.amount_bought;
+      this.listAllProduct.filter((x: any) => x.product_attribue_id == p.product_attribue_id)[0].amount -= p.amountCart;
     }
   }
 

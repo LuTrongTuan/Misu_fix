@@ -53,6 +53,12 @@
                         Biểu đồ thống kê hóa đơn
                     </h2>
                     <div class="chart-container">
+                        <span>
+                            <button nz-button nzType="primary" style="float: right;" (click)="filterChart()">Tìm kiếm</button>
+                            <nz-range-picker style="float: right;" [(ngModel)]="date"
+                                (ngModelChange)="onChange($event)"></nz-range-picker>
+
+                        </span>
                         <canvas id="MyChart">{{ chart }}</canvas>
                     </div>
                 </div>
