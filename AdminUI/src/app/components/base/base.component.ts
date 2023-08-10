@@ -383,6 +383,7 @@ export class BaseComponent {
         this.orderService.getList(null).subscribe(
           (res) => {
             this.listPhoneName = [...new Set(res.data?.filter((x: any) => x.full_name != null).map((x: any) => x.full_name))] ?? [];
+            this.listPhoneName = this.listPhoneName.filter((x: any) => x != 'Khách lẻ')
           }
         );
       }

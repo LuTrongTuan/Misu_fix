@@ -15,7 +15,7 @@ namespace ClothesShopMale.Controllers
 
         [HttpPost]
         [Route("api/v1/order/get-list")]
-        public ResponseBase<List<sp_LoadOrderResult>> GetList(Order req)
+        public ResponseBase<List<sp_LoadOrderResult>> GetList(OrderDTO req)
         {
             try
             {
@@ -35,11 +35,11 @@ namespace ClothesShopMale.Controllers
                     {
                         list = list.Where(x => x.phone.ToLower().Contains(req.phone.ToLower())).ToList();
                     }
-                    if (req.status != null)
+                    if (req.status > 0)
                     {
                         list = list.Where(x => x.status == req.status).ToList();
                     }
-                    if (req.type_payment != null)
+                    if (req.type_payment > 0)
                     {
                         list = list.Where(x => x.type_payment == req.type_payment).ToList();
                     }
@@ -50,6 +50,14 @@ namespace ClothesShopMale.Controllers
                     if (req.deleted_at != null)
                     {
                         list = list.Where(x => x.deleted_at == req.deleted_at).ToList();
+                    }
+                    if (req.from_date != null)
+                    {
+                        list = list.Where(x => x.created_at >= req.from_date).ToList();
+                    }
+                    if (req.to_date != null)
+                    {
+                        list = list.Where(x => x.created_at <= req.to_date).ToList();
                     }
                 }
 

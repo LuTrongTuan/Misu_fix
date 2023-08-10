@@ -9,7 +9,7 @@ import Chart from 'chart.js/auto'
 })
 export class StatisticComponent extends BaseComponent implements OnInit {
 
-  chart: any;
+  chart: Chart | any;
   total_price: any = 0;
   count_user: any;
   count_product: any;
@@ -32,15 +32,15 @@ export class StatisticComponent extends BaseComponent implements OnInit {
         })
         this.total_price = total;
       });
-    this.createChart();
+    this.createChart(null);
   }
 
   exportExcel() {
     this.excelService.exportAsExcelFile(this.listAccount, 'accounts');
   }
 
-  createChart() {
-    this.orderService.getList(null).subscribe(
+  createChart(req: any) {
+    this.orderService.getList(req).subscribe(
       (res) => {
         this.chart = new Chart("MyChart", {
           type: 'bar', //this denotes tha type of chart
@@ -66,8 +66,8 @@ export class StatisticComponent extends BaseComponent implements OnInit {
                 labels: res.data.map((x: any) => `${x.size} - ${x.color}`),
                 datasets: [
                   {
-                    label: "Giá tiền",
-                    data: res.data.map((x: any) => x.price),
+                    label: "Thuộc tính",
+                    data: [...new Set(res.data.map((x: any) => x.size))],
                     backgroundColor: res.data.map((x: any) => x.color)
                   },
                 ]
@@ -88,6 +88,10 @@ export class StatisticComponent extends BaseComponent implements OnInit {
   }
 
   filterChart() {
-    console.log(this.fromDate, this.toDate);
+    this.chart?.destroy();
+    let req = {
+      from_date: this.fromDate,
+      to_date: this.toDate
+    }
   }
 }
