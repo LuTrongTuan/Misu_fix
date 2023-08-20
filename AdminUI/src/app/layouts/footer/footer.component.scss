@@ -1,0 +1,153 @@
+/* FONTS */
+@import url("https://use.typekit.net/edz8qex.css");
+
+/* VARIABLES */
+$white: #ffffff;
+$silver: #f2f2f2;
+$navy: #0a2240;
+$royal: #002c76;
+$lt-blue: #b1c2d6;
+$yellow: #ffc514;
+$not-black: #333333;
+$royal-50: rgba(0, 44, 118, 0.5);
+$navy-50: rgba(10, 34, 64, 0.5);
+$navy-75: rgba(10, 34, 64, 0.75);
+
+$body-font: "p22-underground", sans-serif; 
+
+html {
+  margin-top: 5rem;
+}
+
+.pre-footer {
+  font-family: $body-font;
+  background-color: $silver;
+  .container {
+    max-width: 1140px;
+  }
+  .row {
+    align-items: center;
+    padding: 2rem;
+  }
+  figure {
+    display: inline-block;
+  }
+  h2 {
+    color: $navy;
+    font-size: 2rem;
+   text-transform: uppercase;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid $yellow;
+  }
+  p {
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+  }
+  .admission-btn {
+  border-radius: 2px;
+  background-color: $navy;
+  color: $white;
+  text-decoration: none;
+  font-family: $body-font;
+  padding: 1rem;
+  text-transform: uppercase;
+  transition: all .2s linear 0s; //sets transition so it's not jumpy
+  &:hover {
+   border-radius: 50px;
+    color: $yellow;
+    background-color: $navy;
+  }
+}
+}
+
+footer {
+  background-color: $navy;
+  border-top: 5px solid $yellow;
+  font-family: $body-font;
+  width: 100%;
+  p, address {
+    color: $silver;
+  }
+  .fa-copyright {
+    color: $silver;
+  }
+  a {
+    color: $silver;
+    text-decoration: none;
+    &:hover {
+      color: $yellow;
+    }
+  }
+  h1 {
+    color: $lt-blue;
+    text-transform: uppercase;
+    font-weight: 200;
+    font-size: 1.75rem;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 2rem 0 0 0 !important;
+    width: 100%;
+    img {
+      height: 75px;
+      margin-left: -5rem;
+      @media screen and (max-width: 992px) {
+        margin-left: 0;
+      }
+      }
+    #contact {
+      color: $white;
+      width: auto;
+      margin-top: 2rem;
+      @media screen and (max-width: 992px) {
+          width: 83.333333%;
+          text-align: center;
+          padding-right: 0;
+      }
+    }
+  /*  #left_section {
+      width: auto;
+      display: inline-block;
+      text-align: left;
+      vertical-align: top;
+      margin-top: 2rem;
+     // margin-right: 3rem;
+     // padding-right: 10px;
+      @media screen and (max-width: 992px) {
+        width: 83.333333%;
+        text-align: center;
+        padding-right: 0;
+      }
+    } */
+    #resources {
+      width: auto;
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 2rem;
+     // margin-right: 3rem;
+     // padding-left: 10px;
+       @media screen and (max-width: 992px) {
+          width: 83.333333%;
+          text-align: center;
+          padding-right: 0;
+      }
+    }
+    ul {
+      padding-left: 0;
+      li {
+        padding-bottom: .5rem;
+      }
+    }
+  }
+    #copyright {
+      border-top: .5px solid $lt-blue;
+      padding: 10px;
+      width: 80%;
+      p {
+        margin-top: 1rem;
+      }
+    }
+}

@@ -1,0 +1,75 @@
+<section class="page-header">
+    <div class="overly"></div>   
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="content text-center">
+            <h1 class="mb-3">Địa chỉ</h1>
+            <p>Địa chỉ người nhận dùng để vận chuyển hàng đến tận nơi cho khách hàng</p>
+  
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent justify-content-center">
+              <li class="breadcrumb-item"><a routerLink="/">Trang chủ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Địa chỉ</li>
+            </ol>
+          </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  <section class="user-dashboard page-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-5 col-sm-12 col-lg-3">
+          <div class="nav flex-column nav-pills">
+            <a class="nav-link" routerLink="/edit-address" >Dashboard</a>
+          </div>
+          <div class="nav flex-column nav-pills">
+            <a class="nav-link" routerLink="/edit-address" >Đơn hàng</a>
+          </div>
+          <div class="nav flex-column nav-pills">
+            <a class="nav-link" routerLink="/edit-address" >Tải về</a>
+          </div>
+          <div class="nav flex-column nav-pills">
+            <a class="nav-link active" routerLink="/edit-address" >Địa chỉ</a>
+          </div>
+          <div class="nav flex-column nav-pills">
+            <a class="nav-link" routerLink="/edit-address" >Tài khoản</a>
+          </div>
+          <div class="nav flex-column nav-pills">
+            <a class="nav-link" routerLink="/edit-address" >Đăng xuất</a>
+          </div>
+        </div>
+  
+        <div class="col-12 col-md-7 col-sm-12 col-lg-9">
+          <div class="acccount-settings">
+            <h4 class="mb-4">Chỉnh sửa địa chỉ</h4>
+            <form action="#">
+              <div class="form-row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label>Phường</label>
+                    <input type="text" class="form-control" placeholder="Nhập phường">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label>Thành phố</label>
+                    <input type="text" class="form-control" placeholder="Nhập thành phố">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group mb-4">
+                <label>Địa chỉ</label>
+                <textarea class="form-control" name="address" id="address"></textarea>
+              </div>
+              <button class="btn btn-dark">Lưu thay đổi</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

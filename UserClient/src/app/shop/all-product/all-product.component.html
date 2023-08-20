@@ -1,0 +1,117 @@
+<section class="page-header">
+    <div class="overly"></div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="content text-center">
+            <h1 class="mb-3">Toàn bộ sản phẩm</h1>
+            <p>Đây là danh sách toàn bộ sản phẩm của MisuShop</p>
+  
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb bg-transparent justify-content-center">
+                <li class="breadcrumb-item"><a routerLink="/">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Toàn bộ sản phẩm</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="products-shop section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+          <div class="row align-items-center">
+            <div class="col-lg-12 mb-4 mb-lg-0">
+              <div class="section-title">
+                <h2 class="d-block text-left-sm">Sản phẩm</h2>
+  
+                <div class="heading d-flex justify-content-between mb-5">
+                  <p class="result-count mb-0"> Hiển thị 1–6 kết quả</p>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="row">
+  
+            <div class="col-lg-4 col-12 col-md-6 col-sm-6 mb-5" *ngFor="let p of listProduct">
+              <div class="product">
+                <div class="product-wrap">
+                  <a routerLink="/product-single"><img class="img-fluid w-100 mb-3 img-first" src="assets/images/322.jpg"
+                      alt="product-img" /></a>
+                </div>
+  
+                <div class="product-hover-overlay">
+                  <a href="#"><i class="tf-ion-android-cart"></i></a>
+                  <a href="#"><i class="tf-ion-ios-heart"></i></a>
+                </div>
+  
+                <div class="product-info">
+                  <h2 class="product-title h5 mb-0"><a routerLink="/product-single">{{p.product_name}}</a></h2>
+                  <span class="price">
+                    799.000
+                  </span>
+                </div>
+              </div>
+            </div>
+  
+  
+            <div class="col-12">
+              <nav aria-label="Page navigation">
+                <ul class="pagination">
+                  <li class="page-item"><a style="width:100%" class="page-link" href="javascript:void(0)"
+                      (click)="firstPage()">Đầu</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" aria-label="Previous" (click)="prePage()">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item active"><a class="page-link" href="javascript:void(0)"
+                      (click)="getItemPerpage($event)">{{countPage}}</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" aria-label="Next" (click)="nextPage()">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a style="width:100%" class="page-link" href="javascript:void(0)"
+                      (click)="lastPage()">Cuối</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <!-- popular product -->
+          <section class="widget widget-popular mb-5">
+            <h3 class="widget-title mb-4 h4">Sản phẩm phổ biến</h3>
+            <a class="popular-products-item media" routerLink="/product-single">
+              <img src="assets/images/p-1.jpg" alt="" class="img-fluid mr-4">
+              <div class="media-body">
+                <h6>Túi xách <br>Adidas</h6>
+                <span class="price">700.000</span>
+              </div>
+            </a>
+  
+            <a class="popular-products-item media" routerLink="/product-single">
+              <img src="assets/images/p-2.jpg" alt="" class="img-fluid mr-4">
+              <div class="media-body">
+                <h6>Áo hoodie <br>Logo</h6>
+                <span class="price">450.000</span>
+              </div>
+            </a>
+  
+            <a class="popular-products-item media" routerLink="/product-single">
+              <img src="assets/images/p-3.jpg" alt="" class="img-fluid mr-4">
+              <div class="media-body">
+                <h6>Áo khoác hàn quốc<br>Blade</h6>
+                <span class="price">999.000</span>
+              </div>
+            </a>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>

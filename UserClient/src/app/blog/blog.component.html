@@ -1,0 +1,51 @@
+<section class="page-header">
+    <div class="overly"></div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="content text-center">
+                    <h1 class="mb-3">Blog cá nhân</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb bg-transparent justify-content-center">
+                            <li class="breadcrumb-item"><a routerLink="/">Trang chủ</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Blog</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+
+    <section class="user-dashboard page-wrapper">
+        <div class="container">
+            <div class="row">
+                <div *ngFor="let b of listBlog | filter:searchString | paginate: {
+                    itemsPerPage: 3,
+                    currentPage: page,
+                    totalItems: count
+                  }; let i=index" class="post">
+                    <p class="date">{{b.created_at | date:'dd/MM/yyyy hh:mm:aa'}}</p>
+                    <p>
+                    </p>
+                    <a style="font-weight: bold;font-size:40px;" routerLink="/blog-detail/{{b.blog_id}}">{{b.title}}</a>
+                    <div class="post-content">
+                        <p>{{b.descrip}}</p>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="col-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <div class="d-flex justify-content-center">
+                            <pagination-controls previousLabel="Trước" nextLabel="Tiếp"
+                                (pageChange)="onTableDataChange($event)">
+                            </pagination-controls>
+                        </div>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>

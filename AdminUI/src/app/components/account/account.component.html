@@ -1,0 +1,192 @@
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Tài khoản</h2>
+                    <h5 class="text-white op-7 mb-2">Trang chủ/Admin/Tài khoản</h5>
+                </div>
+                <div class="ml-md-auto py-2 py-md-0">
+                    <a href="javascript:void(0)" class="btn btn-secondary btn-round"
+                        (click)="showAddModal('Add', null)">Thêm mới</a>
+                    <a href="javascript:void(0)" class="btn btn-primary btn-round" (click)="search()"><i
+                            class="fa fa-search" aria-hidden="true"></i>
+                        Tìm kiếm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <nz-form-item class="col-md-3">
+                                        <label>UserName</label>
+                                        <input nz-input placeholder="Nhập" [(ngModel)]="user_name_search" />
+                                    </nz-form-item>
+                                    <nz-form-item class="col-md-3">
+                                        <label>Số điện thoại</label>
+                                        <input nz-input placeholder="Nhập" [(ngModel)]="phone_search" />
+                                    </nz-form-item>
+                                    <nz-form-item class="col-md-3">
+                                        <label>Họ tên</label>
+                                        <input nz-input placeholder="Nhập" [(ngModel)]="full_name_search" />
+                                    </nz-form-item>
+                                    <nz-form-item class="col-md-3">
+                                        <label>Email</label>
+                                        <input nz-input placeholder="Nhập" [(ngModel)]="email_search" />
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive table-hover table-sales">
+                                    <div class="col-md-12">
+                                        <input type="text" style="float: right; margin-bottom: 10px;"
+                                            placeholder="Tìm kiếm nhanh..." [(ngModel)]="searchString"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                    <nz-table #basicTable [nzData]="listAccount">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>User name</th>
+                                                <th>Địa chỉ</th>
+                                                <th>SĐT </th>
+                                                <th>Họ tên</th>
+                                                <th>Email</th>
+                                                <th>Quyền</th>
+                                                <th>Active</th>
+                                                <th>Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of basicTable.data | filter:searchString">
+                                                <td>{{ data.account_id }}</td>
+                                                <td>{{ data.user_name }}</td>
+                                             
+                                                <td>{{ data.town }} - {{ data.district }} - {{ data.city }}</td>
+                                                <td>{{ data.phone }}</td>
+                                                <td>{{ data.full_name }}</td>
+                                                <td>{{ data.email }}</td>
+                                                <td *ngIf="data.role_code == 001">ADMIN</td>
+                                                <td *ngIf="data.role_code == 002">NHÂN VIÊN</td>
+                                                <td *ngIf="data.role_code == 003">KHÁCH HÀNG</td>
+                                                <td style="font-weight: bold; color:green" *ngIf="data.active">V</td>
+                                                <td style="font-weight: bold; color:red" *ngIf="!data.active">X</td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-outline-warning" placement="left"
+                                                        style="margin-right: 0.5rem;"
+                                                        (click)="showAddModal('Update', data)">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-danger" placement="left"
+                                                        style="margin-right: 0.1rem;" nzType="dashed"
+                                                        (click)="showConfirm(data.account_id)">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </nz-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="isDisplay" [nzTitle]="titleModal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <form class="form-horizontal" [formGroup]="AddForm">
+            <div class="row">
+                <div class="col-md-6" *ngIf="!(selected_ID > 0)">
+                    <nz-form-item class="row">
+                        <label class="col-md-10">Tên đăng nhập</label>
+                        <nz-form-control nzErrorTip="Tên đăng nhập không được để trống và chứa ít nhất 4 kí tự"
+                            nzHasFeedback>
+                            <input nz-input type="text" formControlName="user_name" placeholder="nhập...">
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-md-6" *ngIf="!(selected_ID > 0)">
+                    <nz-form-item class="row">
+                        <label class="col-md-10">Mật khẩu</label>
+                        <nz-form-control nzErrorTip="Mật khẩu không được để trống và chứa ít nhất 6 kí tự"
+                            nzHasFeedback>
+                            <input nz-input type="password" formControlName="password" placeholder="nhập...">
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <label class="col-md-12">Tỉnh</label>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn tỉnh" formControlName="city"
+                    (ngModelChange)="selectCity()">
+                    <nz-option *ngFor="let c of listPosition" [nzLabel]="c.name" [nzValue]="c.name">
+                        {{c.name}}</nz-option>
+                </nz-select>
+                <label class="col-md-12">Huyện</label>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn huyện" formControlName="district"
+                    (ngModelChange)="selectDistrict()">
+                    <nz-option *ngFor="let c of listDistrict" [nzLabel]="c.name" [nzValue]="c.name">
+                        {{c.name}}</nz-option>
+                </nz-select>
+                <label class="col-md-12">Xã</label>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn xã" formControlName="town">
+                    <nz-option *ngFor="let c of listTown" [nzLabel]="c.name" [nzValue]="c.name">
+                        {{c.name}}</nz-option>
+                </nz-select>
+                <div class="col-md-12">
+                    <nz-form-item class="row">
+                        <label class="col-md-10">SĐT</label>
+                        <nz-form-control nzErrorTip="Số điện thoại không được để trống và không hợp lệ" nzHasFeedback>
+                            <input type="text" nz-input formControlName="phone" placeholder="nhập...">
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-md-12">
+                    <nz-form-item class="row">
+                        <label class="col-md-10">Họ và tên</label>
+                        <nz-form-control nzErrorTip="Họ và tên không được để trống" nzHasFeedback>
+                            <input type="text" nz-input formControlName="full_name" placeholder="nhập...">
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-md-12">
+                    <nz-form-item class="row">
+                        <label class="col-md-10">Email</label>
+                        <nz-form-control nzErrorTip="Email không được để trống và không đúng định dạng" nzHasFeedback>
+                            <input type="email" nz-input formControlName="email" placeholder="nhập...">
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-md-12">
+                    <nz-form-item class="row">
+                        <label class="col-md-10">Quyền</label>
+                        <nz-form-control nzErrorTip=" Quyền không được để trống." nzHasFeedback>
+                            <nz-select style="width: 100%" nzShowSearch nzAllowClear nzPlaceHolder="Select role"
+                                formControlName="role_code">
+                                <nz-option *ngFor="let c of listRole" [nzLabel]="c.role_name" [nzValue]="c.role_code">
+                                    {{c.role_name}}</nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6"><input type="checkbox" formControlName="admin"> Admin</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6"><input type="checkbox" formControlName="active"> Active</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+</nz-modal>

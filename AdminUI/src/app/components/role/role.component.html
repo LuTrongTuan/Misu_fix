@@ -1,0 +1,84 @@
+<div class="content">
+    <div class="panel-header bg-primary-gradient">
+        <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div>
+                    <h2 class="text-white pb-2 fw-bold">Quyền</h2>
+                    <h5 class="text-white op-7 mb-2">Trang chủ/Admin/Quyền</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-inner mt--5">
+        <div class="row mt--2">
+            <div class="col-md-12">
+                <div class="card full-height">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive table-hover table-sales">
+                                    <div class="col-md-12">
+                                        <input type="text" style="float: right; margin-bottom: 10px;"
+                                            placeholder="Tìm kiếm nhanh..." [(ngModel)]="searchString"
+                                            [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                    <nz-table #basicTable [nzData]="listRole">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Code</th>
+                                                <th>Tên quyền</th>
+                                                <!-- <th>Hành động</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let data of basicTable.data | filter:searchString">
+                                                <td>{{ data.role_id }}</td>
+                                                <td>{{ data.role_code }}</td>
+                                                <td [style]="
+                                                data.role_code == 001 ? 'font-weight: bold; color: #c7c726' : 
+                                                data.role_code == 002 ? 'font-weight: bold; color: green' : 
+                                                'font-weight: bold;color:orange'">{{ data.role_name }}</td>
+                                                <!-- <td>
+                                                    <button class="btn btn-sm btn-outline-warning" placement="left"
+                                                        style="margin-right: 0.5rem;"
+                                                        (click)="showAddModal('Update', data)">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </td> -->
+                                            </tr>
+                                        </tbody>
+                                    </nz-table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="isDisplay" [nzTitle]="titleModal" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <form class="form-horizontal" [formGroup]="AddForm">
+            <div class="col-md-12">
+                <nz-form-item class="row">
+                    <label style="margin-top: 10px;">Mã</label>
+                    <nz-form-control nzErrorTip="Không được để trống." nzHasFeedback>
+                        <input nz-input formControlName="role_code" placeholder="nhập...">
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="col-md-12">
+                <nz-form-item class="row">
+                    <label style="margin-top: 10px;">Tên</label>
+                    <nz-form-control nzErrorTip="Không được để trống." nzHasFeedback>
+                        <input nz-input formControlName="role_name" placeholder="nhập...">
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </form>
+    </ng-container>
+</nz-modal>

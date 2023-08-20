@@ -1,0 +1,36 @@
+<div class="account section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="login-form border p-5">
+            <div class="text-center heading">
+              <h2 class="mb-2">Đăng ký</h2>
+              <p class="lead">Bạn đã có tài khoản? <a routerLink="/login"> Đăng nhập ngay!</a></p>
+            </div>
+  
+            <form class="form-horizontal" [formGroup]="AddForm">
+              <div class="form-group mb-4">
+                <label for="#">Email</label>
+                <input type="text" class="form-control" formControlName="email" placeholder="Nhập email">
+              </div>
+              <div class="form-group mb-4">
+                <label for="#">Username</label>
+                <a class="float-right" href=""></a>
+                <input type="text" class="form-control" formControlName="user_name" placeholder="Nhập username"> 
+              </div>
+              <div class="form-group mb-4">
+                <label for="#">Mật khẩu</label>
+                <input type="password" class="form-control" placeholder="Nhập mật khẩu" formControlName="password"> 
+              </div>
+              <div class="form-group">
+                <label for="#">Xác nhận mật khẩu</label>
+                <input type="password" class="form-control" placeholder="Nhập lại mật khẩu" formControlName="confirm_password"> 
+              </div>
+  
+              <a href="javascript:void(0)" (click)="register()" class="btn btn-main mt-3 btn-block">Đăng ký</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

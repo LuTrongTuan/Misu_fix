@@ -1,0 +1,27 @@
+<div class="account section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="login-form border p-5">
+            <div class="text-center heading">
+              <h2 class="mb-2">Đăng nhập</h2>
+              <p class="lead">Bạn chưa có tài khoản? <a routerLink="/signup">Tạo tài khoản miễn phí!</a></p>
+            </div>
+  
+            <form class="form-horizontal" [formGroup]="loginForm">
+              <div class="form-group mb-4">
+                <label for="#">Tên đăng nhập</label>
+                <input type="text" formControlName="user_name" class="form-control" placeholder="Nhập tên đăng nhập">
+              </div>
+              <div class="form-group">
+                <label for="#">Mật khẩu</label>
+                <a class="float-right" routerLink="/forgot-password">Quên mật khẩu?</a>
+                <input type="password" formControlName="password" class="form-control" placeholder="Enter mật khẩu"> 
+              </div>
+              <a href="javascript:void(0)" (click)="logIn()" class="btn btn-main mt-3 btn-block">Đăng nhập</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

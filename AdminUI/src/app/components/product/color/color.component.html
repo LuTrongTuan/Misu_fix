@@ -1,0 +1,28 @@
+<form class="form-inline">
+    <div class="form-group mx-sm-3 mb-2">
+      <input type="color" [(ngModel)]="_color" [ngModelOptions]="{standalone: true}">
+    </div>
+    <button class="btn btn-primary mb-2" (click)="addColor()">Thêm màu</button>
+</form>
+<div class="table-responsive table-hover table-sales">
+    <nz-table #basicTable [nzData]="dataColor">
+        <thead>
+            <tr>
+                <th>Màu sắc</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td><div style="width: 50px; height: 20px" [style.backgroundColor]="data.color"></div></td>
+                <td>
+                    <button class="btn btn-sm btn-outline-danger" placement="left"
+                        style="margin-right: 0.5rem;" nzType="dashed"
+                        (click)="showConfirm(data.product_color_id)">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>

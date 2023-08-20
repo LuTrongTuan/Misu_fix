@@ -1,0 +1,278 @@
+<div class="col-md-12">
+    <div class="row">
+        <section class="content cus-body">
+            <div class="card">
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="row col-md-12">
+                            <div class="col-md-12">
+                                <Button class="btn btn-sm btn-primary" style="float: right;margin-bottom: 10px;"
+                                    (click)="getListData()">Tìm
+                                    kiếm</Button>
+                            </div>
+                            <nz-form-item class="col-md-4">
+                                <nz-form-label>Mã hóa đơn</nz-form-label>
+                                <nz-form-control>
+                                    <input nz-input placeholder="Nhập..." [(ngModel)]="code_search" />
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item class="col-md-4">
+                                <nz-form-label>Từ ngày</nz-form-label>
+                                <nz-form-control>
+                                    <input type="date" class="form-control" [(ngModel)]="from_search" />
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item class="col-md-4">
+                                <nz-form-label>Đến ngày</nz-form-label>
+                                <nz-form-control>
+                                    <input type="date" class="form-control" [(ngModel)]="to_search" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6" *ngFor="let hd of listOrderInfo">
+            <section class="content cus-body">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="col-md-12">
+                                <h3 style="text-align: center;">{{hd.order_code}}</h3>
+                                <h4 class="text-center">Thông tin khách hàng ({{hd.created_at | date:
+                                    'dd/MM/yyyy'}})</h4>
+                                <h5 *ngIf="hd.status == 3" class="text-center fw-bold" style="color: blue;">(Hoàn thành)
+                                </h5>
+                                <h5 *ngIf="hd.status == 4" class="text-center fw-bold" style="color: red;">(Đã hủy)</h5>
+                                <h5 *ngIf="hd.status == 5" class="text-center fw-bold" style="color: green;">(Chờ thanh
+                                    toán)</h5>
+
+                                <div class="row">
+                                    <div class="col-md-12" *ngIf="hd.status != 3 && hd.status != 4">
+                                        <button class="btn btn-sm btn-outline-warning" placement="left"
+                                            style="float: right;" (click)="toggleEdit()"><i
+                                                class="fas fa-edit"></i></button>
+                                        <Button class="btn btn-sm btn-success" style="float: right; margin-right: 10px;"
+                                            (click)="save(hd)">Lưu</Button>
+                                        <Button class="btn btn-sm btn-primary" (click)="showDetail(hd)"
+                                            style="float: right;margin-right: 10px;">Chi tiết</Button>
+                                        <Button class="btn btn-sm btn-danger" (click)="showDeleteConfirm(hd)"
+                                            style="float: right;margin-right: 10px;">Xóa</Button>
+                                        <Button class="btn btn-sm btn-danger" (click)="showCancleConfirm(hd)"
+                                            style="float: right;margin-right: 10px;">Hủy</Button>
+                                    </div>
+                                    <div class="col-md-12" *ngIf="hd.status == 3">
+                                        <Button class="btn btn-sm btn-primary" (click)="showDetail(hd)"
+                                            style="float: right;margin-right: 10px;">Chi tiết</Button>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="col-md-12">Mã HĐ</label>
+                                        <input type="text" class="form-control" placeholder="nhập..." readonly
+                                            [value]="hd.order_code">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="col-md-12">Người bán</label>
+                                        <input type="text" class="form-control" placeholder="nhập..."
+                                            [(ngModel)]="hd.seller" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="col-md-12">Khách hàng</label>
+                                        <input type="text" class="form-control" placeholder="nhập..."
+                                            [(ngModel)]="hd.full_name" [disabled]="!isEditing">
+                                    </div>
+                                    <div class="col-md-6" *ngIf="hd.bought_type == 'online'">
+                                        <label class="col-md-12">Tỉnh/ Thành phố</label>
+                                        <nz-select style="width: 100%;" nzShowSearch nzAllowClear
+                                            [disabled]="!isEditing" [(ngModel)]="hd.id_city" nzPlaceHolder="Chọn tỉnh"
+                                            (ngModelChange)="selectCity(hd.id_city)">
+                                            <nz-option *ngFor="let c of listCity" [nzLabel]="c.ProvinceName"
+                                                [nzValue]="c.ProvinceID">
+                                                {{c.ProvinceName}}</nz-option>
+                                        </nz-select>
+                                        <label class="col-md-12">Quận/ Huyện</label>
+                                        <nz-select style="width: 100%;" nzShowSearch nzAllowClear
+                                            [disabled]="!isEditing" [(ngModel)]="hd.id_district"
+                                            nzPlaceHolder="Chọn huyện" (ngModelChange)="selectDistrict(hd.id_district)">
+                                            <nz-option *ngFor="let c of hd.listDistrict" [nzLabel]="c.DistrictName"
+                                                [nzValue]="c.DistrictID">
+                                                {{c.DistrictName}}</nz-option>
+                                        </nz-select>
+                                        <label class="col-md-12">Xã</label>
+                                        <nz-select style="width: 100%;" nzShowSearch nzAllowClear
+                                            [disabled]="!isEditing" [(ngModel)]="hd.id_ward" nzPlaceHolder="Chọn xã">
+                                            <nz-option *ngFor="let c of hd.listWard" [nzLabel]="c.WardName"
+                                                [nzValue]="c.WardCode">
+                                                {{c.WardName}}</nz-option>
+                                        </nz-select>
+                                    </div>
+                                    <div class="col-md-12" *ngIf="hd.bought_type == 'online'">
+                                        <label class="col-md-12">Địa chỉ chi tiết</label>
+                                        <textarea nz-input placeholder="nhập..."
+                                            [nzAutosize]="{ minRows: 5, maxRows: 8 }" [(ngModel)]="hd.address"
+                                            [disabled]="!isEditing"></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="col-md-12">Khuyến mãi</label>
+                                        <nz-input-group nzAddOnAfter="%" placeholder="nhập...">
+                                            <input type="number" nz-input [(ngModel)]="hd.coupon"
+                                                [disabled]="!isEditing" />
+                                        </nz-input-group>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="col-md-12">Tổng tiền</label>
+                                        <nz-input-group nzAddOnAfter="VNĐ" placeholder="nhập...">
+                                            <input type="text" nz-input [(ngModel)]="hd.total" disabled />
+                                        </nz-input-group>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="col-md-12">Phương thức mua hàng</label>
+                                        <nz-select style="width: 100%; margin-top: 8px;" nzShowSearch nzAllowClear
+                                            [disabled]="!isEditing" [(ngModel)]="selectedOption"
+                                            [(ngModel)]="hd.bought_type" nzPlaceHolder="Chọn">
+                                            <nz-option nzLabel="Tại quầy" nzValue="offline">Tại quầy</nz-option>
+                                            <nz-option nzLabel="Online" nzValue="online">Online</nz-option>
+                                        </nz-select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="col-md-12 mb-2">Phương thức thanh toán</label>
+                                        <nz-select style="width: 100%;" nzShowSearch nzAllowClear
+                                            [disabled]="!isEditing" [(ngModel)]="hd.payment_type" nzPlaceHolder="Chọn">
+                                            <nz-option nzLabel="Tiền mặt" [nzValue]="1">Tiền mặt</nz-option>
+                                            <nz-option nzLabel="Chuyển khoản" [nzValue]="2">Chuyển
+                                                khoản</nz-option>
+                                        </nz-select>
+                                    </div>
+                                    <!-- <div class="col-md-6">
+                                        <label class="col-md-12">Phương thức mua hàng</label>
+                                        <input type="text" class="form-control" [value]="hd.bought_type">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="col-md-12">Phương thức thanh toán</label>
+                                        <input type="text" class="form-control"
+                                            [value]="hd.payment_type == 1 ? 'Tiền mặt' : 'Chuyển khoản'">
+                                    </div> -->
+                                    <div class="col-md-12">
+                                        <label *ngIf="hd.status == 5" nz-checkbox [(ngModel)]="hd.status">Chờ thanh
+                                            toán</label>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="col-md-12">Ghi chú</label>
+                                        <textarea nz-input placeholder="nhập..." [(ngModel)]="hd.note"
+                                            [nzAutosize]="{ minRows: 5, maxRows: 8 }"
+                                            [disabled]="!isEditing"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<nz-modal [(nzVisible)]="isDisplay" nzTitle="Giỏ hàng" (nzOnCancel)="handleCancel()" (nzOnOk)="saveItem()"
+    [nzWidth]="1000">
+    <ng-container *nzModalContent>
+        <div class="col-md-12" *ngIf="status_order == 5">
+            <!-- <button nz-button [nzType]="'primary'" style="float: left;" (click)="saveItem()"><span><i
+                        class="fas fa-plus"></i>&nbsp;Lưu</span></button> -->
+            <div class="row">
+                <form class="form-inline">
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="inputPassword2" class="sr-only">Mã sản phẩm</label>
+                        <input type="text" class="form-control" id="inputPassword2" placeholder="Mã sản phẩm"
+                            [(ngModel)]="product_code" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2" (click)="addToCart()">Thêm giỏ hàng</button>
+                    <br>
+                </form>
+            </div>
+        </div>
+        <h4 class="row col-md-12">Tổng tiền: {{total | number}} VNĐ</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã</th>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Size</th>
+                    <th>Màu sắc</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
+                    <th *ngIf="status_order == 5">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of listProductCart; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{data.product_code}}</td>
+                    <td>{{data.product_name}}</td>
+                    <td *ngIf="!(status_order == 5)">{{data.amountCart | number}}</td>
+                    <td *ngIf="status_order == 5"><input style="width: 50px;" type="number"
+                            [(ngModel)]="data.amountCart"></td>
+                    <td>{{data.size}}</td>
+                    <td>
+                        <div [style.backgroundColor]="data.color" style="width: 20px; height: 20px;"></div>
+                    </td>
+                    <td>{{data.price | number}}</td>
+                    <td>{{data.price * data.amountCart ?? 0 | number}} VNĐ</td>
+                    <td *ngIf="status_order == 5" style="white-space: nowrap;">
+                        <button class="btn btn-sm btn-outline-danger" placement="left" style="margin-right: 0.1rem;"
+                            nzType="dashed" (click)="showConfirmDeleteItem(data)">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-success" placement="left" style="margin-right: 0.1rem;"
+                            nzType="dashed" (click)="changeSum(data)">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="table-responsive table-hover table-sales">
+            <nz-table #basicTable [nzData]="listAllProduct">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Màu sắc</th>
+                        <th scope="col">Đơn giá</th>
+                        <th scope="col">Trạng thái</th>
+                        <th scope="col" *ngIf="status_order == 5">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let c of basicTable.data; let i=index">
+                        <th style="text-align: center;" scope="row">{{i+1}}</th>
+                        <td>{{c.product_name}}</td>
+                        <td>{{c.amount}}</td>
+                        <td>{{c.size}}</td>
+                        <td>
+                            <div [style.backgroundColor]="c.color" style="width: 20px; height: 20px;"></div>
+                        </td>
+                        <td>{{ c.price | number }}</td>
+                        <td
+                            [style]="c.status == 1 ? 'font-weight: bold; color: green' : 'font-weight: bold;color:yellow'">
+                            {{c.status == 1 ? 'Mới' : 'Cũ'}}</td>
+                        <td *ngIf="status_order == 5 && checkProductCart(c.product_attribue_id) && (c.amount > 0)"
+                            style="text-align: center;">
+                            <input [disabled]="!(status_order == 5)" type="checkbox" [checked]="c.checked"
+                                (change)="changeAmount(c)" [(ngModel)]="c.checked">
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </ng-container>
+</nz-modal>
