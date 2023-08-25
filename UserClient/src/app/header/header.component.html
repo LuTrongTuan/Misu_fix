@@ -41,10 +41,9 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown5">
             <li><a routerLink="/order" *ngIf="token">Đơn hàng</a></li>
             <li><a routerLink="/profile-details" *ngIf="token">Thông tin cá nhân</a></li>
-            <li><a routerLink="/login">Đăng nhập</a></li>
-            <li><a routerLink="/signup">Đăng ký</a></li>
-            <li><a routerLink="/" (click)="logout()">Đăng xuất</a></li>
-            <li><a routerLink="/forgot-password">Quên mật khẩu</a></li>
+            <li><a routerLink="/login" *ngIf="!dataAccount">Đăng nhập</a></li>
+            <li><a routerLink="/signup" *ngIf="!dataAccount">Đăng ký</a></li>
+            <li><a routerLink="/" (click)="logout()" *ngIf="dataAccount">Đăng xuất</a></li>
           </ul>
         </li><!-- / Account -->
         <li class="nav-item active">
@@ -68,7 +67,7 @@
             <div class="media-body">
               <h6>{{c.product_name}}</h6>
               <div class="cart-price">
-                <span>{{c.count}} x</span>
+                <span>{{c.amountCart}} x</span>
                 <span> {{c.price | number}}</span>
               </div>
             </div>
@@ -79,7 +78,7 @@
             <span class="total-price h6">{{totalPrice ?? 0 | number}}</span>
             <div class="text-center cart-buttons mt-3">
               <a href="#" class="btn btn-small btn-transparent btn-block" routerLink="/cart">Xem giỏ hàng</a>
-              <a href="#" class="btn btn-small btn-main btn-block" routerLink="/checkout">Thanh toán</a>
+              <a href="#" class="btn btn-small btn-main btn-block" routerLink="/checkout" *ngIf="totalPrice != 0">Thanh toán</a>
             </div>
           </div>
         </div>

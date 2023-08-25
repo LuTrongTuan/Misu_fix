@@ -173,7 +173,7 @@ export class BaseComponent {
   }
 
   getListOrder = () => {
-    this.orderService.getList().subscribe(
+    this.orderService.getList(null).subscribe(
       (res) => {
         this.listBrand = res.data;
       }
@@ -249,6 +249,7 @@ export class BaseComponent {
     this.positionService.getListDistrict(req).subscribe(
       (res: any) => {
         this.listDistrict = res.data;
+        console.log( res.data)
       }
     );
   }
@@ -257,6 +258,7 @@ export class BaseComponent {
     this.positionService.getListWard(req).subscribe(
       (res: any) => {
         this.listWard = res.data;
+        console.log( res.data)
       }
     );
   }

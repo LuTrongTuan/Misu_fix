@@ -54,13 +54,13 @@ export class LoginComponent implements OnInit, OnDestroy {
           if (z.data.role_code == '001' || z.data.role_code == '002') {
             localStorage.setItem('UserInfo', JSON.stringify(z.data));
             this.AppService.login();
-            this.toastr.success('Login successfully !');
+            this.toastr.success('Đăng nhập thành công !');
           }
           else {
             this.toastr.warning('Bạn không có quyền truy cập vào đây !');
           }
         } else {
-          this.toastr.warning('Login Failed !');
+          this.toastr.warning('Đăng nhập thất bại !');
           localStorage.removeItem('UserInfo');
         }
       });

@@ -19,7 +19,7 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   }
 
   getListOrderByAccount() {
-    this.orderService.getList().subscribe(
+    this.orderService.getList(null).subscribe(
       (res) => {
         this.orderByAccount = res.data.filter((x: any) => x.account_id == this.account_id);
         if (this.orderByAccount.length > 0) {
@@ -55,17 +55,21 @@ export class OrdersComponent extends BaseComponent implements OnInit {
   }
 
   cancleOrder(id: any) {
-    this.orderService.cancleOrder(id).subscribe(
-      (res: any) => {
-        if (res.status == 200) {
-          this.toastr.success('Successfully !');
-          this.getListOrderByAccount();
+   var userConfirm = confirm("Bạn có chắc muốn xóa đơn hàng này không?");
+    if(userConfirm){
+      this.orderService.cancleOrder(id).subscribe(
+        (res: any) => {
+          if (res.status == 200) {
+            this.toastr.success('Hủy đơn hàng thành công !');
+            this.getListOrderByAccount();
+          }
+          else {
+            this.toastr.warning('Hủy đơn hàng thất bại !');
+          }
         }
-        else {
-          this.toastr.warning('Failed !');
-        }
-      }
-    );
+      );
+    }
+     
   }
 
   exportOrder() {

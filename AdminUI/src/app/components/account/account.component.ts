@@ -17,11 +17,11 @@ export class AccountComponent extends BaseComponent implements OnInit {
     admin: new FormControl(null, [Validators.required]),
     active: new FormControl(null),
     role_code: new FormControl(null, [Validators.required]),
-    town: new FormControl(null),
-    district: new FormControl(null),
-    city: new FormControl(null),
+    town_id: new FormControl(null),
+    district_id: new FormControl(null),
+    city_id: new FormControl(null),
     user_name: new FormControl(null),
-    password: new FormControl(null),
+    password: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$')]),
   })
 
   ngOnInit(): void {
@@ -76,9 +76,9 @@ export class AccountComponent extends BaseComponent implements OnInit {
         admin: !dataEdit ? '' : dataEdit.admin,
         active: !dataEdit ? '' : dataEdit.active,
         role_code: !dataEdit ? '' : dataEdit.role_code,
-        city: !dataEdit ? '' : dataEdit.city,
-        town: !dataEdit ? '' : dataEdit.town,
-        district: !dataEdit ? '' : dataEdit.district,
+        city_id: !dataEdit ? '' : dataEdit.city_id,
+        town_id: !dataEdit ? '' : dataEdit.town_id,
+        district_id: !dataEdit ? '' : dataEdit.district_id,
       });
       this.selectCity();
     }
@@ -98,9 +98,9 @@ export class AccountComponent extends BaseComponent implements OnInit {
         admin: this.AddForm.value.admin,
         active: this.AddForm.value.active,
         role_code: this.AddForm.value.role_code,
-        city: this.AddForm.value.city,
-        town: this.AddForm.value.town,
-        district: this.AddForm.value.district,
+        city_id: this.AddForm.value.city_id,
+        town_id: this.AddForm.value.town_id,
+        district_id: this.AddForm.value.district_id,
         user_name: this.AddForm.value.user_name,
         password: this.AddForm.value.password,
       }
@@ -133,11 +133,11 @@ export class AccountComponent extends BaseComponent implements OnInit {
   }
 
   selectCity() {
-    this.listDistrict = this.listPosition.filter((x: any) => x.name == this.AddForm.value.city)[0].districts ?? null;
+    this.listDistrict = this.listPosition.filter((x: any) => x.name == this.AddForm.value.city_id)[0].districts ?? null;
   }
 
   selectDistrict() {
-    this.listTown = this.listDistrict.filter((x: any) => x.name == this.AddForm.value.district)[0].wards;
+    this.listTown = this.listDistrict.filter((x: any) => x.name == this.AddForm.value.district_id)[0].wards;
   }
 
   search() {

@@ -33,7 +33,7 @@ export class AccService {
 
   updatePassword(req: any): Observable<any> {
     return this.http
-      .post<any>(this.appConfig.API + 'api/v1/account/updateInfo',req)
+      .put<any>(this.appConfig.API + 'api/v1/account/updateInfo',req)
       .pipe(
         map((z) => {
           return z;

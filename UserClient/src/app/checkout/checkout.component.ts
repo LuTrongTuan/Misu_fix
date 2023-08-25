@@ -16,21 +16,35 @@ export class CheckoutComponent extends BaseComponent implements OnInit {
   address: any;
   phone: any;
   note: any;
-
+  dataAccount = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo'))));
+  
   ngOnInit(): void {
     this.getListCity();
     this.cartInfo = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('Cart'))));
+    this.cartInfo =  this.cartInfo.filter((c: any) => c. account_id === this.dataAccount.account_id);
+   
     this.cartInfo.forEach((c: any) => {
-      this.totalPrice += c.count * c.price;
+      this.totalPrice += c.amountCart * c.price;
     })
+    this.fillDataAccount();
+   
   }
-
+  fillDataAccount(): void{
+  
+    this.full_name = this.dataAccount?.full_name;
+    this.phone = this.dataAccount?.phone;
+    this.citySelected = this.dataAccount?.city_id;
+    this.districtSelected = this.dataAccount?.district_id;
+    this.townSelected = `${this.dataAccount?.town_id}` ;
+    this.selectCity();
+    this.selectDistrict();
+  }
   selectCity() {
-    this.getListDistrict({ province_id: this.citySelected });
+    this.getListDistrict({ province_id: this.citySelected});
   }
 
   selectDistrict() {
-    this.getListWard({ district_id: this.districtSelected });
+    this.getListWard({ district_id: this.districtSelected});
   }
 
   payment() {
@@ -54,39 +68,27 @@ export class CheckoutComponent extends BaseComponent implements OnInit {
       this.orderService.insert(req).subscribe(
         (res) => {
           if (res) {
-            this.toastr.success('Thành công !');
-            localStorage.removeItem('Cart');
-            this.router.navigate(['/']);
+            this.toastr.success('Thanh toán thành công !');
+            this.cartInfo = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('Cart'))));
+            this.cartInfo =  this.cartInfo.filter((c: any) => c. account_id !== this.dataAccount.account_id);
+            localStorage.setItem('Cart', JSON.stringify(this.cartInfo));
+            this.router.navigate(['/order']);
             setTimeout(window.location.reload.bind(window.location), 250);
           }
           else {
-            this.toastr.warning('Thất bại !');
+            this.toastr.warning('Thanh toán thất bại !');
           }
         }
       );
     }
     else {
-      this.toastr.warning('Bạn chưa đồng ý với các điểu khoản !');
+      this.toastr.warning('Bạn chưa đồng ý xác nhận thanh toán !');
     }
   }
 
   getPaymentShipper() {
-
-    // var req = {
-    //   service_id: null,
-    //   service_type_id: this.service_id,
-    //   insurance_value: this.totalPrice,
-    //   coupon: null,
-    //   to_ward_code: this.townSelected,
-    //   to_district_id: this.districtSelected,
-    //   from_district_id: 1542,
-    //   height: 100,
-    //   length: 15,
-    //   weight: 1000,
-    //   width: 15
-    // };
-    this.positionService.getShipPayment({
-      "service_id": 100039,
+    var req = {
+      "service_type_id": this.service_id,
       // "insurance_value": this.totalPrice,
       "coupon": null,
       "from_district_id": 1542,
@@ -96,7 +98,9 @@ export class CheckoutComponent extends BaseComponent implements OnInit {
       "length": 5,
       "weight": 100,
       "width": 5
-    }).subscribe(
+    };
+
+    this.positionService.getShipPayment(req).subscribe(
       (res: any) => {
         this.feeShip = res.data.total;
       }

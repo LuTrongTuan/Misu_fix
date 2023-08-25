@@ -69,17 +69,17 @@ export class OrderComponent extends BaseComponent implements OnInit {
 
   showConfirm(id: any): void {
     this.modal.confirm({
-      nzTitle: '<i>Do you Want to delete these items?</i>',
+      nzTitle: '<i>Bạn có chắc muốn xóa item này không?</i>',
       // nzContent: '<b>Some descriptions</b>',
       nzOnOk: () => {
         this.orderService.delete(id).subscribe(
           (res) => {
             if (res.status == 200) {
-              this.toastr.success('Delete Success !');
+              this.toastr.success('Xóa thành công !');
               this.getListOrder(this.getRequest());
             }
             else {
-              this.toastr.warning('Delete Fail !');
+              this.toastr.warning('Xóa thất bại !');
               this.getListOrder(this.getRequest());
             }
           }
@@ -185,7 +185,7 @@ export class OrderComponent extends BaseComponent implements OnInit {
 
   setDisplayEdit(order: any): boolean {
     this.selected_ID = order.order_id;
-    if ((order.status == 3) || (order.status == 4)) {
+    if ((order.status == 3) || (order.status == 4) || (order.status == 5)) {
       return false;
     }
     return true;

@@ -37,7 +37,7 @@
                            <div class="form-group mb-4">
                               <label for="company_name">Tên đầy đủ</label>
                               <input type="text" class="form-control" id="company_name" [(ngModel)]="full_name"
-                                 [ngModelOptions]="{standalone: true}" placeholder="">
+                                 [ngModelOptions]="{standalone: true}" placeholder="Họ và tên">
                            </div>
                         </div>
 
@@ -95,12 +95,12 @@
             <!-- Order sidebar Summery -->
             <div class="col-md-6 col-lg-4">
                <div class="product-checkout-details mt-5 mt-lg-0">
-                  <h4 class="mb-4 border-bottom pb-4">Tóm tắt đơn hàng</h4>
+                  <h4 class="mb-4 border-bottom pb-4">Đơn hàng</h4>
 
                   <div class="media product-card" *ngFor="let c of cartInfo">
                      <p>{{c.product_name}}</p>
                      <div class="media-body text-right">
-                        <p class="h5">{{c.count}} x {{c.price}}</p>
+                        <p class="h5">{{c.amountCart}} x {{c.price}}</p>
                      </div>
                   </div>
 
@@ -127,9 +127,9 @@
                            Chuyển khoản
                         </label>
 
-                        <div class="alert alert-secondary mt-3" role="alert">
+                        <!-- <div class="alert alert-secondary mt-3" role="alert">
                            Hiện tại hệ thống đã có trục trặc, bạn có thể chọn tiền mặt.
-                        </div>
+                        </div> -->
                      </div>
 
                      <div class="form-check mb-3">
@@ -144,13 +144,12 @@
                      <div class="form-check mb-3">
                         <input type="checkbox" class="form-check-input" id="exampleCheck3" [(ngModel)]="checkRole"
                            [ngModelOptions]="{standalone: true}">
-                        <label class="form-check-label" for="exampleCheck3">Tôi đã đọc và đồng ý với các điều kiện của
-                           shop</label>
+                        <label class="form-check-label" for="exampleCheck3">Tôi đồng ý xác nhận thanh toán *</label>
                      </div>
                   </form>
 
                   <div class="info mt-4 border-top pt-4 mb-5">
-                     Đơn hàng của bạn sẽ luôn được đảm bảo chất lượng khi nhận hàng <a href="#">privacy policy</a>.
+                     Đơn hàng của bạn sẽ luôn được đảm bảo chất lượng khi nhận hàng.
                   </div>
                   <a href="javascript:void(0)" (click)="payment()" class="btn btn-main btn-small">Thanh toán</a>
                </div>

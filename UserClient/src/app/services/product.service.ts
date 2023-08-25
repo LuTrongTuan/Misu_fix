@@ -111,6 +111,36 @@ export class ProductService {
       );
   }
 
+  minusAmount(product_attribue: any): Observable<any> {
+    return this.http
+      .post<any>(this.appConfig.API + 'api/v1/product/minus-amount', product_attribue)
+      .pipe(
+        map((z) => {
+          return z;
+        })
+      );
+  }
+  
+  increaseAmount(product_attribue: any): Observable<any> {
+    return this.http
+      .post<any>(this.appConfig.API + 'api/v1/product/increase-amount', product_attribue)
+      .pipe(
+        map((z) => {
+          return z;
+        })
+      );
+  }
+
+  increasesAmountCart(cartItem: any): Observable<any> {
+    return this.http
+      .post<any>(this.appConfig.API + 'api/v1/product/increases-amountCart', cartItem)
+      .pipe(
+        map((z) => {
+          return z;
+        })
+      );
+  }
+
   delete(id: any): Observable<any> {
     return this.http
       .delete<any>(this.appConfig.API + 'api/v1/product/' + id)
@@ -134,6 +164,16 @@ export class ProductService {
   deleteDetail(id: any): Observable<any> {
     return this.http
       .delete<any>(this.appConfig.API + 'api/v1/productattribute/detail/' + id)
+      .pipe(
+        map((z) => {
+          return z;
+        })
+      );
+  }
+
+  getProductAttribute(id: any): Observable<any> {
+    return this.http
+      .get<any>(this.appConfig.API + `api/v1/productattribute/detail/${id}`)
       .pipe(
         map((z) => {
           return z;

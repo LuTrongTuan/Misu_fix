@@ -9,19 +9,32 @@ import { BaseComponent } from '../components/base/base.component';
 export class HeaderComponent extends BaseComponent implements OnInit {
 
   listProductByCate : any;
-  userInfo: any;
+
+  dataAccount = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo'))));
 
   ngOnInit(): void {
     this.getListCate();
     this.getToken();
     this.getListProduct();
-    this.userInfo = localStorage.getItem('UserInfo');
-    this.cartInfo = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('Cart'))));
-    this.cartInfo.forEach((c: any) => {
-      this.totalPrice += c.count * c.price;
-    })
+    this.getListCart()
+    
   }
 
+  getListCart(){
+    this.cartInfo = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('Cart'))));
+
+    const currentTime = new Date().getTime();
+    const expirationTime = 5 * 60 * 1000; // 5 phút tính bằng mili giây
+
+    this.cartInfo = this.cartInfo.filter((x: any) => (currentTime - x.createdTime) < expirationTime);
+    localStorage.setItem('Cart', JSON.stringify(this.cartInfo));
+
+    this.cartInfo =  this.cartInfo.filter((c: any) => c. account_id === this.dataAccount.account_id);
+   
+    this.cartInfo.forEach((c: any) => {
+      this.totalPrice += c.amountCart * c.price;
+    })
+  }
   reloadPage (id: any, name: any) {
     window.location.href = '/#/shop/';
     setTimeout(window.location.reload.bind(window.location), 250);
@@ -46,12 +59,15 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     this.productService.save(reqProd).subscribe(
       (res) => {
         if (res) {
+          this.cartInfo = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('Cart'))));
           this.cartInfo = this.cartInfo.filter((x: any) => x.id != item.id);
-          this.totalPrice -= item.count * item.price;
+          this.totalPrice -= item.amountCart * item.price;
           localStorage.setItem('Cart', JSON.stringify(this.cartInfo));
+          this.toastr.success('Thành công !');
+          setTimeout(window.location.reload.bind(window.location), 350);
         }
         else {
-          this.toastr.success('Fail !');
+          this.toastr.success('Thất bại !');
         }
       }
     );
@@ -61,5 +77,6 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     localStorage.removeItem('UserInfo');
     this.toastr.success('Đăng xuất thành công !');
     this.token = null;
+    setTimeout(window.location.reload.bind(window.location), 350);
   }
 }

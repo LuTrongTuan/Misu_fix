@@ -20,7 +20,8 @@ namespace ClothesShopMale.Controllers
             {
                 return new ResponseBase<List<ProductAttributeDTO>>
                 {
-                    data = db.ProductAttributes.Select(x => new ProductAttributeDTO { 
+                    data = db.ProductAttributes.Select(x => new ProductAttributeDTO
+                    {
                         product_attribute_id = x.product_attribue_id,
                         size = x.size,
                         color = x.color,
@@ -84,8 +85,10 @@ namespace ClothesShopMale.Controllers
                 var listPImage = db.ProductImages.Where(x => x.product_id == req.product_id);
                 db.ProductImages.DeleteAllOnSubmit(listPImage);
                 db.SubmitChanges();
-                req.list_image_checked.ForEach(x => {
-                    db.ProductImages.InsertOnSubmit(new ProductImage { 
+                req.list_image_checked.ForEach(x =>
+                {
+                    db.ProductImages.InsertOnSubmit(new ProductImage
+                    {
                         image = x,
                         product_id = req.product_id
                     });
@@ -114,7 +117,8 @@ namespace ClothesShopMale.Controllers
             {
                 return new ResponseBase<IEnumerable<ProductDetailDTO>>
                 {
-                    data = db.ProductDetails.Select(x => new ProductDetailDTO { 
+                    data = db.ProductDetails.Select(x => new ProductDetailDTO
+                    {
                         product_detail_id = x.product_detail_id,
                         detail = x.detail,
                         product_id = x.product_id.GetValueOrDefault()
@@ -139,7 +143,8 @@ namespace ClothesShopMale.Controllers
             {
                 return new ResponseBase<List<ProductImageDTO>>
                 {
-                    data = db.ProductImages.Select(x => new ProductImageDTO { 
+                    data = db.ProductImages.Select(x => new ProductImageDTO
+                    {
                         product_image_id = x.product_image_id,
                         image = x.image,
                         product_id = x.product_id.GetValueOrDefault()
@@ -288,6 +293,37 @@ namespace ClothesShopMale.Controllers
             catch (Exception ex)
             {
                 return new ResponseBase<bool>
+                {
+                    status = 500
+                };
+            }
+        }
+
+        [HttpGet]
+        [Route("api/v1/productattribute/detail/{id}")]
+        public ResponseBase<ProductAttribute> GetDetail(int id = 0)
+        {
+            try
+            {
+                var data = db.ProductAttributes.Where(x => x.product_attribue_id == id).FirstOrDefault();
+
+                return new ResponseBase<ProductAttribute>
+                {
+                    data = new ProductAttribute()
+                    {
+                        product_attribue_id = data.product_attribue_id,
+                        size = data.size,
+                        color = data.color,
+                        price = data.price.GetValueOrDefault(),
+                        product_id = data.product_id.GetValueOrDefault(),
+                        amount = data.amount.GetValueOrDefault()
+                    },
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseBase<ProductAttribute>
                 {
                     status = 500
                 };

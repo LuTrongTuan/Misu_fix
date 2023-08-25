@@ -45,19 +45,19 @@ namespace ClothesShopMale.Controllers
                     }
                     if (req.created_at != null)
                     {
-                        list = list.Where(x => x.created_at == req.created_at).ToList();
+                        list = list.Where(x => x.created_at.Value.Date == req.created_at.Value.Date).ToList();
                     }
                     if (req.deleted_at != null)
                     {
-                        list = list.Where(x => x.deleted_at == req.deleted_at).ToList();
+                        list = list.Where(x => x.deleted_at.Value.Date == req.deleted_at.Value.Date).ToList();
                     }
                     if (req.from_date != null)
                     {
-                        list = list.Where(x => x.created_at >= req.from_date).ToList();
+                        list = list.Where(x => x.created_at.Value.Date >= req.from_date.Value.Date).ToList();
                     }
                     if (req.to_date != null)
                     {
-                        list = list.Where(x => x.created_at <= req.to_date).ToList();
+                        list = list.Where(x => x.created_at.Value.Date <= req.to_date.Value.Date).ToList();
                     }
                 }
 
@@ -120,10 +120,28 @@ namespace ClothesShopMale.Controllers
         {
             try
             {
-                var ord = db.Orders.Where(x => x.order_id == id).FirstOrDefault();
-                ord.status = 4;
-                ord.deleted_at = DateTime.Now;
-                db.SubmitChanges();
+                if(id > 0)
+                {
+                    var ord = db.Orders.Where(x => x.order_id == id).FirstOrDefault();
+                    ord.status = 4;
+                    ord.deleted_at = DateTime.Now;
+                    var listCartItem = JsonConvert.DeserializeObject<List<ProductAttributeDTO>>(ord.order_item);
+                    if (listCartItem.Any())
+                    {
+                        listCartItem.ForEach(x =>
+                        {
+                            var pa = db.ProductAttributes?.FirstOrDefault(p => p.product_attribue_id == x.product_attribue_id) ?? null;
+                            if (pa != null)
+                            {
+                                pa.amount += x.amountCart;
+                                db.SubmitChanges();
+                            }
+                        });
+                    }
+
+                    db.SubmitChanges();
+                }
+
                 return new ResponseBase<bool>
                 {
                     status = 200

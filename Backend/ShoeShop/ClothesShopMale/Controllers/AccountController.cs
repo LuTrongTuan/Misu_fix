@@ -117,9 +117,9 @@ namespace ClothesShopMale.Controllers
                     acc.active = req.active;
                     acc.admin = req.admin;
                     acc.email = req.email;
-                    acc.town = req.town;
-                    acc.district = req.district;
-                    acc.city = req.city;
+                    acc.town_id = req.town_id;
+                    acc.district_id = req.district_id;
+                    acc.city_id = req.city_id;
                     db.SubmitChanges();
                 }
                 else
@@ -160,11 +160,19 @@ namespace ClothesShopMale.Controllers
                                phone = a.phone,
                                role_code = a.role_code,
                                email = a.email,
-                               town = a.town,
-                               district = a.district,
-                               city = a.city,
+                               town_id = a.town_id,
+                               district_id = a.district_id,
+                               city_id = a.city_id,
                                token = createToken(a.user_name)
                            }).FirstOrDefault();
+
+                if (acc == null)
+                {
+                     return new ResponseBase<AccountDTO>
+                    {
+                        status = 500
+                    };
+                }
                 if (acc.account_id > 0)
                 {
                     return new ResponseBase<AccountDTO>
@@ -188,6 +196,39 @@ namespace ClothesShopMale.Controllers
                     status = 500
                 };
             }
+        }
+
+        [HttpPut]
+        [Route("api/v1/account/updateInfo")]
+        public ResponseBase<Account> Update(Account req)
+        {
+            try
+            {
+                var acc = db.Accounts.Where(x => x.account_id == req.account_id).FirstOrDefault();
+                acc.updated_at = DateTime.Now;
+                acc.phone = req.phone;
+                acc.full_name = req.full_name;
+                acc.email = req.email;
+                acc.password = req.password;
+                acc.town_id = req.town_id;
+                acc.district_id = req.district_id;
+                acc.city_id = req.city_id;
+                db.SubmitChanges();
+
+                return new ResponseBase<Account>
+                {
+                    data = req,
+                    status = 200
+                };
+            }
+            catch (Exception)
+            {
+                return new ResponseBase<Account>
+                {
+                    status = 500
+                };
+            }
+
         }
 
         public static string createToken(string Username)

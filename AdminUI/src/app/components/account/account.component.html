@@ -119,27 +119,27 @@
                 <div class="col-md-6" *ngIf="!(selected_ID > 0)">
                     <nz-form-item class="row">
                         <label class="col-md-10">Mật khẩu</label>
-                        <nz-form-control nzErrorTip="Mật khẩu không được để trống và chứa ít nhất 6 kí tự"
+                        <nz-form-control nzErrorTip="Mật khẩu không được để trống và chứa ít nhất 8 kí tự có chứa 1 chứ hoa và 1 kí tự số"
                             nzHasFeedback>
                             <input nz-input type="password" formControlName="password" placeholder="nhập...">
                         </nz-form-control>
                     </nz-form-item>
                 </div>
                 <label class="col-md-12">Tỉnh</label>
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn tỉnh" formControlName="city"
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn tỉnh" formControlName="city_id"
                     (ngModelChange)="selectCity()">
-                    <nz-option *ngFor="let c of listPosition" [nzLabel]="c.name" [nzValue]="c.name">
+                    <nz-option *ngFor="let c of listPosition" [nzLabel]="c.name" [nzValue]="c.ProvinceID">
                         {{c.name}}</nz-option>
                 </nz-select>
                 <label class="col-md-12">Huyện</label>
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn huyện" formControlName="district"
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn huyện" formControlName="district_id"
                     (ngModelChange)="selectDistrict()">
-                    <nz-option *ngFor="let c of listDistrict" [nzLabel]="c.name" [nzValue]="c.name">
+                    <nz-option *ngFor="let c of listDistrict" [nzLabel]="c.name" [nzValue]="c.DistrictID">
                         {{c.name}}</nz-option>
                 </nz-select>
                 <label class="col-md-12">Xã</label>
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn xã" formControlName="town">
-                    <nz-option *ngFor="let c of listTown" [nzLabel]="c.name" [nzValue]="c.name">
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn xã" formControlName="town_id">
+                    <nz-option *ngFor="let c of listTown" [nzLabel]="c.name" [nzValue]="c.WardCode">
                         {{c.name}}</nz-option>
                 </nz-select>
                 <div class="col-md-12">

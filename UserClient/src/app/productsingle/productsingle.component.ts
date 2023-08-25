@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BaseComponent } from '../components/base/base.component';
+import { mergeMap } from 'rxjs';
 
 @Component({
   selector: 'app-productsingle',
@@ -138,6 +139,8 @@ export class ProductsingleComponent extends BaseComponent implements OnInit {
         return false;
       }
     }
+    var dataAccount = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo'))));
+
     if (this.token) {
       var cartItem = {
         id: Math.random(),
@@ -149,15 +152,20 @@ export class ProductsingleComponent extends BaseComponent implements OnInit {
         price: p.price,
         total: `${this.countP} x ${p.price}`,
         color: this.colorPick,
-        size: this.sizePick
+        size: this.sizePick,
+        account_id: dataAccount.account_id,
+        createdTime: new Date().getTime(),
       };
-      this.cart = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('Cart'))));
+      
+      this.productService.minusAmount(cartItem).subscribe();
 
-      if (this.cart != null && this.cart.length > 0) {
-        var c = this.cart.filter((c: any) => c.product_id == cartItem.product_id && c.size == cartItem.size && c.color == cartItem.color);
+      this.cart = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('Cart'))));
+      var cart = this.cart?.filter((l: any)=> l.account_id === cartItem.account_id);
+      if(cart?.length > 0 && cart != null){
+        var c = this.cart.filter((c: any) => c.product_id == cartItem.product_id && c.size == cartItem.size && c.color == cartItem.color && c.account_id == cartItem.account_id);
         if (c.length > 0) {
           this.cart.forEach((c: any): any => {
-            if (c.product_id == cartItem.product_id && c.color == cartItem.color && c.size == cartItem.size) {
+            if (c.product_id == cartItem.product_id && c.color == cartItem.color && c.size == cartItem.size && c.account_id == cartItem.account_id) {
               c.amountCart += cartItem.amountCart;
               c.total = `${c.amountCart} x ${p.price}`
             }
@@ -168,12 +176,15 @@ export class ProductsingleComponent extends BaseComponent implements OnInit {
         }
       }
       else {
-        this.cart = [];
+        if(this.cart == null){
+          this.cart =[];
+        }
         this.cart.push(cartItem);
       }
       localStorage.setItem('Cart', JSON.stringify(this.cart));
       this.toastr.success('Thêm giỏ hàng thành công !');
       setTimeout(window.location.reload.bind(window.location), 250);
+      
       // var reqProd = {
       //   product_id: p.product_id,
       //   amount:  parseInt(p.amount)  - parseInt(this.countP),

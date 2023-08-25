@@ -65,7 +65,7 @@
                     <span class="amount">
                       <span class="currencySymbol">
                         <pre wp-pre-tag-3=""></pre>
-                      </span><input style="width:60px;" type="number" [(ngModel)]="c.amountCart" [ngModelOptions]="{standalone: true}"></span>
+                      </span><input style="width:60px;" type="number" (input)="checkValue($event, i)" min="0" [(ngModel)]="c.amountCart" [ngModelOptions]="{standalone: true}"></span>
                   </td>
                   <td class="product-subtotal" data-title="Total">
                     <span class="amount">
@@ -75,10 +75,10 @@
                   </td>
                   <td class="product-remove" data-title="Remove">
                     <a style="font-size: 40px;font-weight: bold;" href="javascript:void(0)" class="remove" aria-label="Remove this item" data-product_id="30"
-                      data-product_sku="" (click)="removeCartItem(c.product_id, c.amountCart*c.price)">×</a>
+                      data-product_sku="" (click)="removeCartItem(c)">×</a>
                       &nbsp; &nbsp;&nbsp;
                     <a style="font-size: 30px;font-weight: bold;color:green" href="javascript:void(0)" class="remove" aria-label="Remove this item" data-product_id="30"
-                      data-product_sku="" (click)="updateCountCart(c)"><i class="fa fa-check"></i></a>
+                      data-product_sku="" (click)="updateCountCart(c)" *ngIf="c.amountCart > 0"><i class="fa fa-check"></i></a>
                   </td>
                 </tr>
               </tbody>
@@ -87,25 +87,18 @@
         </div>
       </div>
     </div>
+    <div *ngIf="cartInfo == null || cartInfo == '' " style="font-size: 27px; font-weight: 600; position: absolute; margin: 60px 18%; color: darkgray;">Không có dữ liệu</div>
     <div class="row justify-content-end">
       <div class="col-lg-4">
         <div class="cart-info card p-4 mt-4">
           <h4 class="mb-4">Tổng đơn hàng</h4>
           <ul class="list-unstyled mb-4">
-            <li class="d-flex justify-content-between pb-2 mb-3">
-              <h5>Giá gốc</h5>
-              <span>{{totalPrice | number}} VNĐ</span>
-            </li>
-            <!-- <li class="d-flex justify-content-between pb-2 mb-3">
-              <h5>Phí ship</h5>
-              <span>Miễn phí</span>
-            </li> -->
             <li class="d-flex justify-content-between pb-2">
-              <h5>Thành tiền</h5>
+              <h5>Tổng tiền</h5>
               <span>{{totalPrice | number}} VNĐ</span>
             </li>
           </ul>
-          <a routerLink="/checkout" class="btn btn-main btn-small">Tiến hành thanh toán</a>
+          <a routerLink="/checkout" class="btn btn-main btn-small" *ngIf="totalPrice != 0" style="border-radius: 12px;">Tiến hành thanh toán</a>
         </div>
       </div>
     </div>

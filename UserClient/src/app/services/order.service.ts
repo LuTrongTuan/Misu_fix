@@ -11,9 +11,9 @@ import { Router } from '@angular/router';
 export class OrderService {  
   constructor(@Inject(AppConfig) private readonly appConfig: AppConfiguration,private router: Router,private http : HttpClient) {}
 
-  getList(): Observable<any> {
+  getList(req: any): Observable<any> {
     return this.http
-      .get<any>(this.appConfig.API + 'api/v1/order')
+      .post<any>(this.appConfig.API + 'api/v1/order/get-list', req)
       .pipe(
         map((z) => {
           return z;

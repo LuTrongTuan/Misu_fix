@@ -160,6 +160,7 @@ export class ListOrderComponent extends BaseComponent implements OnInit {
   calculator(pro: any) {
     this.productService.getListAll().subscribe(
       (res) => {
+        debugger
         let p = res.data.filter((x: any) => x.product_attribue_id == pro.product_attribue_id)[0];
         this.listAllProduct.filter((x: any) => x.product_attribue_id == pro.product_attribue_id)[0].amount = p.amount - pro.amountCart + pro.amountBought;
       });

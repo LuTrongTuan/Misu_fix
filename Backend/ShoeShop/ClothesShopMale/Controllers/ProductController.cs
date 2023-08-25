@@ -1,5 +1,6 @@
 ﻿using ClothesShopMale.Models;
 using ClothesShopMale.Models.DTO;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -399,5 +400,101 @@ namespace ClothesShopMale.Controllers
                 };
             }
         }
+
+        [HttpPost]
+        [Route("api/v1/product/minus-amount")]
+        public ResponseBase<bool> MinusAmount(ProductAttributeDTO input)
+        {
+            try
+            {
+
+                var productAttribute = db.ProductAttributes?.FirstOrDefault(p => p.product_attribue_id == input.product_attribue_id) ?? null;
+                if (productAttribute != null)
+                {
+                    productAttribute.amount -= input.amountCart;
+                    db.SubmitChanges();
+                }
+
+                return new ResponseBase<bool>
+                {
+                    data = true,
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseBase<bool>
+                {
+                    status = 500
+                };
+            }
+        }
+
+        [HttpPost]
+        [Route("api/v1/product/increase-amount")]
+        public ResponseBase<bool> IncreaseAmount(ProductAttributeDTO input)
+        {
+            try
+            {
+
+                var productAttribute = db.ProductAttributes?.FirstOrDefault(p => p.product_attribue_id == input.product_attribue_id) ?? null;
+                if (productAttribute != null)
+                {
+                    productAttribute.amount += input.amountCart;
+                    db.SubmitChanges();
+                }
+
+                return new ResponseBase<bool>
+                {
+                    data = true,
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseBase<bool>
+                {
+                    status = 500
+                };
+            }
+        }
+
+
+        [HttpPost]
+        [Route("api/v1/product/increases-amountCart")]
+        public ResponseBase<bool> IncreaseAmount(Order input)
+        {
+            try
+            {
+                var listCartItem = JsonConvert.DeserializeObject<List<ProductAttributeDTO>>(input.order_item);
+
+                if (listCartItem.Any())
+                {
+                    listCartItem.ForEach(x =>
+                    {
+                        var productAttribute = db.ProductAttributes?.FirstOrDefault(p => p.product_attribue_id == x.product_attribue_id) ?? null;
+                        if (productAttribute != null)
+                        {
+                            productAttribute.amount += x.amountCart;
+                            db.SubmitChanges();
+                        }
+                    });
+                }
+
+                return new ResponseBase<bool>
+                {
+                    data = true,
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseBase<bool>
+                {
+                    status = 500
+                };
+            }
+        }
+
     }
 }

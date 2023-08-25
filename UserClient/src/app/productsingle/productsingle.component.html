@@ -53,8 +53,9 @@
 
           <hr>
 
-          <h3 class="product-price">{{product?.price | number}} &nbsp;<del>{{(product?.price + product?.price/2) |
-              number}}</del>VNĐ</h3>
+          <h3 class="product-price">{{product?.price | number}} VNĐ</h3> 
+          <!-- &nbsp;<del>{{(product?.price + product?.price/2) |
+            number}}</del> -->
 
           <p class="product-description my-4 " *ngFor="let d of listPDetail">
             {{d.detail}}
@@ -63,7 +64,7 @@
           <form class="cart" action="#" method="post">
             <div class="quantity d-flex align-items-center">
               <input [ngModelOptions]="{standalone: true}" [(ngModel)]="countP" type="number" id="#"
-                class="input-text qty text form-control w-25 mr-3" step="1" min="1" max="9" name="quantity" value="1"
+                class="input-text qty text form-control w-25 mr-3" step="1" min="1" name="quantity" value="1"
                 title="Qty" size="4">
               <a href="javascript:void(0)" (click)="confirmProduct(product)" class="btn btn-main btn-small">Xác nhận</a>&nbsp;&nbsp;&nbsp;
               <a href="javascript:void(0)" (click)="addToCart(product)" class="btn btn-main btn-small">Thêm vào giỏ</a>
