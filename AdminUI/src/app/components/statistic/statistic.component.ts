@@ -19,7 +19,6 @@ export class StatisticComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListAccount(null);
-    this.getListProduct(null);
     this.getListOrder(null);
     this.productService.getList(null).subscribe(
       (res) => {
@@ -63,7 +62,7 @@ export class StatisticComponent extends BaseComponent implements OnInit {
             this.chart = new Chart("MyChart1", {
               type: 'doughnut', //this denotes tha type of chart
               data: {// values on X-Axis
-                labels: res.data.map((x: any) => `${x.size} - ${x.color}`),
+                labels: Array.from(new Set(res.data.map((x: any) => `${x.size} - ${x.color}`))),
                 datasets: [
                   {
                     label: "Thuộc tính",

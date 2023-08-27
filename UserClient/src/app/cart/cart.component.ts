@@ -19,9 +19,7 @@ export class CartComponent extends BaseComponent implements OnInit {
     this.cartInfo = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('Cart'))));
 
     const currentTime = new Date().getTime();
-    const expirationTime = 3 * 60 * 1000; // 5 phút tính bằng mili giây
-    console.log(this.cartInfo.filter((x: any) => (currentTime - x.createdTime) > expirationTime))
-   
+    const expirationTime = 5 * 60 * 1000; // 5 phút tính bằng mili giây
 
     if(this.cartInfo.filter((x: any) => x.createdTime) != ''){
       if(this.cartInfo.filter((x: any) => (currentTime - x.createdTime) > expirationTime) != ''){

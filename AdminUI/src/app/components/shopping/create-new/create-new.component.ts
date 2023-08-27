@@ -23,6 +23,7 @@ export class CreateNewComponent extends BaseComponent implements OnInit {
   listWardFilter: any;
   totalPayment: any = 0;
   full_name: string = '';
+  bought_type: any;
   closeTab({ index }: { index: number }): void {
     this.tabs.splice(index, 1);
   }
@@ -38,10 +39,17 @@ export class CreateNewComponent extends BaseComponent implements OnInit {
       this.tabs.push(
         tab
       );
-      this.refreshOrderInfo();
-      this.orderInfo.order_code = `HD${this.date.getDate()}${this.date.getMonth() + 1}${this.date.getFullYear()}${Math.random()}`;
+       this.refreshOrderInfo();
+      this.orderInfo.order_code = `HD_${Math.floor(Math.random() * (99999999 - 10000000)) + 10000000}`;
       this.index = this.tabs.length - 1;
     }
+  }
+
+  resetOrder(){
+    //this.refreshOrderInfo();
+    this.orderInfo.order_code = `HD_${Math.floor(Math.random() * (99999999 - 10000000)) + 10000000}`;
+    //this.listProductCart = [];
+    //this.totalPayment = 0;
   }
 
   ngOnInit(): void {
@@ -51,7 +59,7 @@ export class CreateNewComponent extends BaseComponent implements OnInit {
     this.refreshOrderInfo();
     this.getListAllProduct();
     this.orderInfo.bought_type = 'offline';
-    this.orderInfo.order_code = `HD${this.date.getDate()}${this.date.getMonth() + 1}${this.date.getFullYear()}${Math.random()}`;
+    this.orderInfo.order_code = `HD_${Math.floor(Math.random() * (99999999 - 10000000)) + 10000000}`;
     const data = localStorage.getItem('UserInfo');
     if (data) {
       const account = JSON.parse(data);
@@ -79,7 +87,7 @@ export class CreateNewComponent extends BaseComponent implements OnInit {
       this.productFilter = this.productFilter.filter((x: any) => x.product_code == this.product_code);
     }
     if (this.product_name) {
-      this.productFilter = this.productFilter.filter((x: any) => x.product_name.toLowerCase().includes(this.product_name));
+      this.productFilter = this.productFilter.filter((x: any) => x.product_name.toLowerCase().includes(this.product_name.toLowerCase()));
     }
     if (this.size_search) {
       this.productFilter = this.productFilter.filter((x: any) => x.size == this.size_search);
@@ -137,21 +145,18 @@ export class CreateNewComponent extends BaseComponent implements OnInit {
 
   createOrder(): boolean {
     if (!this.listProductCart || !(this.totalPayment > 0)) {
-      this.toastr.warning('Bạn chưa chọn sản phẩm');
+      this.toastr.warning('Vui lòng chọn sản phẩm');
       return false;
     }
-    if (!this.orderInfo.full_name || !this.orderInfo.payment_type || !this.orderInfo.bought_type) {
-      if (this.orderInfo.bought_type == 'offline') {
-        this.toastr.warning('Bạn chưa nhập đủ thông tin');
-        return false;
-      }
-      if (this.orderInfo.bought_type == 'online') {
-        if (!this.citySelected || !this.districtSelected) {
-          this.toastr.warning('Bạn chưa nhập đủ thông tin');
-          return false;
-        }
-      }
+
+    if (this.orderInfo.full_name == null || this.orderInfo.full_name == undefined 
+        || this.orderInfo.payment_type == null || this.orderInfo.payment_type == undefined
+        || this.bought_type == null || this.bought_type == undefined
+        ) {
+      this.toastr.warning('Vui lòng nhập đủ thông tin');
+      return false;
     }
+
     if (this.orderInfo.status) {
       this.orderInfo.status = 5
     } else {
@@ -160,12 +165,16 @@ export class CreateNewComponent extends BaseComponent implements OnInit {
     this.orderInfo.seller = this.full_name;
     this.orderInfo.total = this.totalPayment;
     this.orderInfo.order_item = JSON.stringify(this.listProductCart.filter((x: any) => x.checked == true));
+    this.orderInfo.bought_type = this.bought_type == 1 ? "Offline" : "Online";
     this.orderInfo.type = 2;
     this.orderService.createOrderInfor(this.orderInfo).subscribe(
       (res: any) => {
         if (res.status == 200) {
           this.toastr.success('Thành công !');
           this.refreshOrderInfo();
+          this.orderInfo.order_code = `HD${Math.floor(Math.random() * (99999999 - 10000000)) + 10000000}`;
+          this.listProductCart = [];
+          this.totalPayment = 0;
         }
         else {
           this.toastr.warning('Thất bại !');

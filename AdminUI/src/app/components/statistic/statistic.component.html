@@ -19,7 +19,7 @@
                 <div class="card-body pb-0">
                     <div class="h1 fw-bold float-right"><i class="fa fa-book" aria-hidden="true"></i></div>
                     <h2 class="mb-2">{{listProduct.length ?? 0}}</h2>
-                    <p>Sản phẩm</p>
+                    <p>Size màu</p>
                     <div class="pull-in sparkline-fix chart-as-background">
                         <div id="lineChart2"><canvas width="327" height="70"
                                 style="display: inline-block; width: 327px; height: 70px; vertical-align: top;"></canvas>
@@ -95,24 +95,22 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>STT</th>
+                                    <th>Mã tài khoản</th>
                                     <th>UserName</th>
-                                    <th>Admin</th>
-                                    <th>Active</th>
                                     <th>Email</th>
                                     <th>Role</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let data of listAccount">
-                                    <td>{{ data.account_id }}</td>
+                                <tr *ngFor="let data of listAccount; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ data.avatar }}</td>
                                     <td>{{ data.user_name }}</td>
-                                    <td *ngIf="data.admin"><i style="color: green;" class="fa fa-check"></i></td>
-                                    <td *ngIf="data.active"><i style="color: green;" class="fa fa-check"></i></td>
-                                    <td *ngIf="!data.admin" style="color: red;">X</td>
-                                    <td *ngIf="!data.active" style="color: red;">X</td>
                                     <td>{{ data.email }}</td>
-                                    <td>{{ data.role_code }}</td>
+                                    <td *ngIf="data.role_code == 001">ADMIN</td>
+                                    <td *ngIf="data.role_code == 002">NHÂN VIÊN</td>
+                                    <td *ngIf="data.role_code == 003">KHÁCH HÀNG</td>
                                 </tr>
                             </tbody>
                         </table>

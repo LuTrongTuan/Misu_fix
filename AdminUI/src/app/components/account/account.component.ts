@@ -14,15 +14,18 @@ export class AccountComponent extends BaseComponent implements OnInit {
     phone: new FormControl(null, [Validators.required, Validators.pattern('^\\+?[0-9]{9,10}$')]),
     full_name: new FormControl(null, [Validators.required]),
     email: new FormControl(null, [Validators.required, Validators.email]),
-    admin: new FormControl(null, [Validators.required]),
-    active: new FormControl(null),
+    admin: new FormControl(1),
+    active: new FormControl(1),
     role_code: new FormControl(null, [Validators.required]),
-    town_id: new FormControl(null),
+    town_id: new FormControl(''),
     district_id: new FormControl(null),
     city_id: new FormControl(null),
-    user_name: new FormControl(null),
-    password: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$')]),
+    user_name: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[a-z])[a-z\d]{4,}$')]),
+    password: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{6,}$')]),
+    account_code: new FormControl(null),
   })
+
+  code_random: any;
 
   ngOnInit(): void {
     this.getListAccount(this.getRequest());
@@ -41,18 +44,18 @@ export class AccountComponent extends BaseComponent implements OnInit {
 
   showConfirm(id: any): void {
     this.modal.confirm({
-      nzTitle: '<i>Do you Want to delete these items?</i>',
+      nzTitle: '<i>Bạn có muốn xóa tài khoản này không?</i>',
       // nzContent: '<b>Some descriptions</b>',
       nzOnOk: () => {
         this.accountService.delete(id).subscribe(
           (res) => {
             if (res.status == 200) {
-              this.toastr.success('Delete Success !');
+              this.toastr.success('Xóa thành công !');
               this.getListAccount(this.getRequest());
               this.handleCancel();
             }
             else {
-              this.toastr.warning('Delete Fail !');
+              this.toastr.warning('Xóa thất bại !');
               this.getListAccount(this.getRequest());
               this.handleCancel();
             }
@@ -77,13 +80,26 @@ export class AccountComponent extends BaseComponent implements OnInit {
         active: !dataEdit ? '' : dataEdit.active,
         role_code: !dataEdit ? '' : dataEdit.role_code,
         city_id: !dataEdit ? '' : dataEdit.city_id,
-        town_id: !dataEdit ? '' : dataEdit.town_id,
+        town_id: !dataEdit ? '' : `${dataEdit.town_id}`,
         district_id: !dataEdit ? '' : dataEdit.district_id,
+        password: !dataEdit ? '' : dataEdit.password,
+        user_name: !dataEdit ? '' : dataEdit.user_name,
+        account_code: !dataEdit ? '' : dataEdit.avatar,
       });
-      this.selectCity();
+      this.getListCity();
+      if(dataEdit.city_id){
+        this.selectCity();
+        if(dataEdit.district_id) this.selectDistrict();
+      }
+     
     }
     else {
+      this.code_random = 'ACC_' + this.makeRandomeCode(8);
       this.AddForm.reset();
+      this.AddForm.patchValue({
+        account_code: this.code_random
+      })
+      this.getListCity();
     }
   }
 
@@ -103,16 +119,17 @@ export class AccountComponent extends BaseComponent implements OnInit {
         district_id: this.AddForm.value.district_id,
         user_name: this.AddForm.value.user_name,
         password: this.AddForm.value.password,
+        avatar: this.AddForm.value.account_code,
       }
       this.accountService.save(req).subscribe(
         (res) => {
           if (res.status == 200) {
-            this.toastr.success('Success !');
+            this.toastr.success('Thành công !');
             this.getListAccount(this.getRequest());
             this.handleCancel();
           }
           else {
-            this.toastr.success('Fail !');
+            this.toastr.success('Thất bại !');
           }
         }
       );
@@ -128,17 +145,24 @@ export class AccountComponent extends BaseComponent implements OnInit {
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
     this.modal.closeAll();
   }
 
   selectCity() {
-    this.listDistrict = this.listPosition.filter((x: any) => x.name == this.AddForm.value.city_id)[0].districts ?? null;
+    this.getListDistrict({ province_id: this.AddForm.value?.city_id});
   }
 
   selectDistrict() {
-    this.listTown = this.listDistrict.filter((x: any) => x.name == this.AddForm.value.district_id)[0].wards;
+    this.getListWard({ district_id: this.AddForm.value?.district_id});
   }
+
+  // selectCity() {
+  //   this.listDistrict = this.listPosition.filter((x: any) => x.name == this.AddForm.value.city_id)[0].districts ?? null;
+  // }
+
+  // selectDistrict() {
+  //   this.listTown = this.listDistrict.filter((x: any) => x.name == this.AddForm.value.district_id)[0].wards;
+  // }
 
   search() {
     this.getListAccount(this.getRequest());

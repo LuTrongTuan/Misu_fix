@@ -77,6 +77,7 @@
                                     <nz-table #basicTable [nzData]="listOrder" style="margin-top: 10px;">
                                         <thead>
                                             <tr>
+                                                <th>STT</th>
                                                 <th>Mã HĐ</th>
                                                 <th>Khách hàng</th>
                                                 <th>SĐT</th>
@@ -90,8 +91,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let data of basicTable.data | filter:searchString">
-                                                <td>HD00{{ data.order_id }}</td>
+                                            <tr *ngFor="let data of basicTable.data | filter:searchString; let i = index">
+                                                <td>{{ i + 1 }}</td>
+                                                <td>{{ data.order_code }}</td>
                                                 <td>{{data.full_name}}</td>
                                                 <td>{{data.phone}}</td>
                                                 <td>{{data.city_name}} - {{data.district_name}} - {{data.ward_name}}

@@ -71,11 +71,25 @@
                     <div *ngIf="addForm.controls['oldPassword'].hasError('required') && addForm.controls['oldPassword'].touched" style="color: red; font-size: 13px;">
                       Mật khẩu mới không được để trống.
                     </div>
+                    <div *ngIf="addForm.controls['oldPassword'].hasError('pattern') && addForm.controls['oldPassword'].touched"
+                      style="color: red; font-size: 13px;">
+                      Mật khẩu phải có ít nhất 6 kí tự và 1 chữ thường 1 chữ hoa.
+                    </div>
                   </div>
 
                     <div class="col-md-6">
                       <label >Nhập lại mật khẩu</label>
                       <input type="password" class="form-control" placeholder="" formControlName="confirmChangePassword" placeholder="">
+                      <div
+                        *ngIf="addForm.controls['confirmChangePassword'].hasError('required') && addForm.controls['confirmChangePassword'].touched"
+                        style="color: red; font-size: 13px;">
+                        Mật khẩu mới không được để trống.
+                      </div>
+                      <div
+                        *ngIf="addForm.controls['confirmChangePassword'].hasError('pattern') && addForm.controls['confirmChangePassword'].touched"
+                        style="color: red; font-size: 13px;">
+                        Mật khẩu phải có ít nhất 6 kí tự và 1 chữ thường 1 chữ hoa.
+                      </div>
                     </div>
 
                     <div class="col-md-6">

@@ -52,31 +52,27 @@
                                     <nz-table #basicTable [nzData]="listAccount">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>User name</th>
-                                                <th>Địa chỉ</th>
-                                                <th>SĐT </th>
+                                                <th>STT</th>
+                                                <th>Mã tài khoản</th>
                                                 <th>Họ tên</th>
+                                                <th>User name</th>
                                                 <th>Email</th>
-                                                <th>Quyền</th>
-                                                <th>Active</th>
+                                                <th>SĐT </th>
+                                                <th>Chức vụ</th>
                                                 <th>Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let data of basicTable.data | filter:searchString">
-                                                <td>{{ data.account_id }}</td>
-                                                <td>{{ data.user_name }}</td>
-                                             
-                                                <td>{{ data.town }} - {{ data.district }} - {{ data.city }}</td>
-                                                <td>{{ data.phone }}</td>
+                                            <tr *ngFor="let data of basicTable.data | filter:searchString; let i = index">
+                                                <td>{{ i + 1 }}</td>
+                                                <td>{{ data.avatar }}</td>
                                                 <td>{{ data.full_name }}</td>
+                                                <td>{{ data.user_name }}</td>
                                                 <td>{{ data.email }}</td>
+                                                <td>{{ data.phone }}</td>
                                                 <td *ngIf="data.role_code == 001">ADMIN</td>
                                                 <td *ngIf="data.role_code == 002">NHÂN VIÊN</td>
                                                 <td *ngIf="data.role_code == 003">KHÁCH HÀNG</td>
-                                                <td style="font-weight: bold; color:green" *ngIf="data.active">V</td>
-                                                <td style="font-weight: bold; color:red" *ngIf="!data.active">X</td>
                                                 <td>
                                                     <button class="btn btn-sm btn-outline-warning" placement="left"
                                                         style="margin-right: 0.5rem;"
@@ -107,6 +103,12 @@
     <ng-container *nzModalContent>
         <form class="form-horizontal" [formGroup]="AddForm">
             <div class="row">
+                <div class="col-md-12">
+                    <nz-form-item class="row">
+                        <label class="col-md-10">Mã tài khoản</label>
+                        <input nz-input type="text" class="form-control" formControlName="account_code" readonly>
+                    </nz-form-item>
+                </div>
                 <div class="col-md-6" *ngIf="!(selected_ID > 0)">
                     <nz-form-item class="row">
                         <label class="col-md-10">Tên đăng nhập</label>
@@ -119,30 +121,13 @@
                 <div class="col-md-6" *ngIf="!(selected_ID > 0)">
                     <nz-form-item class="row">
                         <label class="col-md-10">Mật khẩu</label>
-                        <nz-form-control nzErrorTip="Mật khẩu không được để trống và chứa ít nhất 8 kí tự có chứa 1 chứ hoa và 1 kí tự số"
+                        <nz-form-control nzErrorTip="Mật khẩu không được để trống và chứa ít nhất 6 kí tự có chứa chữ thường và chữ hoa "
                             nzHasFeedback>
                             <input nz-input type="password" formControlName="password" placeholder="nhập...">
                         </nz-form-control>
                     </nz-form-item>
                 </div>
-                <label class="col-md-12">Tỉnh</label>
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn tỉnh" formControlName="city_id"
-                    (ngModelChange)="selectCity()">
-                    <nz-option *ngFor="let c of listPosition" [nzLabel]="c.name" [nzValue]="c.ProvinceID">
-                        {{c.name}}</nz-option>
-                </nz-select>
-                <label class="col-md-12">Huyện</label>
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn huyện" formControlName="district_id"
-                    (ngModelChange)="selectDistrict()">
-                    <nz-option *ngFor="let c of listDistrict" [nzLabel]="c.name" [nzValue]="c.DistrictID">
-                        {{c.name}}</nz-option>
-                </nz-select>
-                <label class="col-md-12">Xã</label>
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn xã" formControlName="town_id">
-                    <nz-option *ngFor="let c of listTown" [nzLabel]="c.name" [nzValue]="c.WardCode">
-                        {{c.name}}</nz-option>
-                </nz-select>
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <nz-form-item class="row">
                         <label class="col-md-10">SĐT</label>
                         <nz-form-control nzErrorTip="Số điện thoại không được để trống và không hợp lệ" nzHasFeedback>
@@ -150,7 +135,7 @@
                         </nz-form-control>
                     </nz-form-item>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <nz-form-item class="row">
                         <label class="col-md-10">Họ và tên</label>
                         <nz-form-control nzErrorTip="Họ và tên không được để trống" nzHasFeedback>
@@ -158,7 +143,7 @@
                         </nz-form-control>
                     </nz-form-item>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <nz-form-item class="row">
                         <label class="col-md-10">Email</label>
                         <nz-form-control nzErrorTip="Email không được để trống và không đúng định dạng" nzHasFeedback>
@@ -166,10 +151,10 @@
                         </nz-form-control>
                     </nz-form-item>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <nz-form-item class="row">
                         <label class="col-md-10">Quyền</label>
-                        <nz-form-control nzErrorTip=" Quyền không được để trống." nzHasFeedback>
+                        <nz-form-control nzErrorTip="Quyền không được để trống." nzHasFeedback>
                             <nz-select style="width: 100%" nzShowSearch nzAllowClear nzPlaceHolder="Select role"
                                 formControlName="role_code">
                                 <nz-option *ngFor="let c of listRole" [nzLabel]="c.role_name" [nzValue]="c.role_code">
@@ -178,14 +163,32 @@
                         </nz-form-control>
                     </nz-form-item>
                 </div>
-                <div class="col-md-12">
+                <label class="col-md-12">Tỉnh</label>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn tỉnh" formControlName="city_id" (ngModelChange)="selectCity()">
+                    <nz-option *ngFor="let c of listCity" [nzLabel]="c.ProvinceName" [nzValue]="c.ProvinceID">
+                        {{c.ProvinceName}}</nz-option>
+                </nz-select>
+                
+                <label class="col-md-12">Huyện</label>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn huyện" formControlName="district_id"
+                    (ngModelChange)="selectDistrict()">
+                    <nz-option *ngFor="let c of listDistrict" [nzLabel]="c.DistrictName" [nzValue]="c.DistrictID">
+                        {{c.DistrictName}}</nz-option>
+                </nz-select>
+                
+                <label class="col-md-12">Xã</label>
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Chọn xã" formControlName="town_id">
+                    <nz-option *ngFor="let c of listWard" [nzLabel]="c.WardName" [nzValue]="c.WardCode">
+                        {{c.WardName}}</nz-option>
+                </nz-select>
+                <!-- <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6"><input type="checkbox" formControlName="admin"> Admin</div>
                     </div>
                     <div class="row">
                         <div class="col-md-6"><input type="checkbox" formControlName="active"> Active</div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </form>
     </ng-container>

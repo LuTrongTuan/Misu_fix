@@ -15,7 +15,6 @@ export class BrandComponent extends BaseComponent implements OnInit {
   AddForm = new FormGroup({
     brand_code: new FormControl(null),
     brand_name: new FormControl(null, [Validators.required]),
-    image: new FormControl(null),
     status: new FormControl(1),
   })
 
@@ -26,17 +25,17 @@ export class BrandComponent extends BaseComponent implements OnInit {
 
   showConfirm(id: any): void {
     this.modal.confirm({
-      nzTitle: '<i>Do you Want to delete these items?</i>',
+      nzTitle: '<i>Bạn có chắc muốn xóa không?</i>',
       // nzContent: '<b>Some descriptions</b>',
       nzOnOk: () => {
         this.brandService.delete(id).subscribe(
           (res) => {
             if (res.status == 200) {
-              this.toastr.success('Delete Success !');
+              this.toastr.success('Xóa thành công !');
               this.getListBrand();
             }
             else {
-              this.toastr.warning('Delete Fail !');
+              this.toastr.warning('Xóa thất bại !');
               this.getListBrand();
             }
           }
@@ -54,7 +53,6 @@ export class BrandComponent extends BaseComponent implements OnInit {
       this.AddForm.patchValue({
         brand_name: !dataEdit ? '' : dataEdit.brand_name,
         brand_code: !dataEdit ? '' : dataEdit.brand_code,
-        image: !dataEdit ? '' : dataEdit.image,
         status: !dataEdit ? 1 : dataEdit.status,
       });
     }
@@ -73,18 +71,17 @@ export class BrandComponent extends BaseComponent implements OnInit {
         brand_id: this.selected_ID,
         brand_code: this.AddForm.value.brand_code,
         brand_name: this.AddForm.value.brand_name,
-        image: this.AddForm.value.image,
         status: this.AddForm.value.status,
       }
       this.brandService.save(req).subscribe(
         (res) => {
           if (res.status == 200) {
-            this.toastr.success('Success !');
+            this.toastr.success('Thành công !');
             this.handleCancel();
             this.getListBrand();
           }
           else {
-            this.toastr.success('Fail !');
+            this.toastr.success('Thất bại !');
           }
         }
       );
@@ -101,7 +98,6 @@ export class BrandComponent extends BaseComponent implements OnInit {
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
     this.isDisplay = false;
   }
 }

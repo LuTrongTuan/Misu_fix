@@ -62,27 +62,28 @@
                                     <nz-table #basicTable [nzData]="listProduct">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                <th>STT</th>
                                                 <th>Mã sản phẩm</th>
                                                 <th>Tên sản phẩm</th>
                                                 <th>Danh mục</th>
                                                 <th>Thương hiệu</th>
-                                                <th>Xuất xứ</th>
+                                                <th>Giá tiền</th>
                                                 <th>Trạng thái</th>
                                                 <th>Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let data of basicTable.data | filter:searchString">
-                                                <td>{{ data.product_id }}</td>
+                                            <tr *ngFor="let data of basicTable.data | filter:searchString; let i = index">
+                                                <td>{{ i + 1 }}</td>
                                                 <td>{{ data.product_code }}</td>
                                                 <td>{{ data.product_name }}</td>
                                                 <td>{{ data.category_name }}</td>
                                                 <td>{{ data.brand_name }}</td>
-                                                <td>{{ data.origin }}</td>
+                                                <td *ngIf="data.min_price == data.max_price">{{ data.min_price | number}}</td>
+                                                <td *ngIf="data.min_price != data.max_price">{{ data.min_price | number}} - {{ data.max_price | number}}</td>
                                                 <td
                                                     [style]="data.status == 1 ? 'font-weight: bold; color: green' : 'font-weight: bold;color:yellow'">
-                                                    {{data.status == 1 ? 'Mới' : 'Cũ'}}</td>
+                                                    {{data.status == 1 ? 'Hoạt động' : 'Không hoạt động'}}</td>
                                                 <td>
                                                     <button class="btn btn-sm btn-outline-warning" placement="left"
                                                         style="margin-right: 0.5rem;"
@@ -314,8 +315,8 @@
                                                 </option>
                                             </select>
                                         </td>
-                                        <td *ngIf="isEdit"><input type="number" [(ngModel)]="data.price"></td>
-                                        <td *ngIf="isEdit"><input type="number" [(ngModel)]="data.amount"></td>
+                                        <td *ngIf="isEdit"><input type="number" min="1" [(ngModel)]="data.price"></td>
+                                        <td *ngIf="isEdit"><input type="number" min="1" [(ngModel)]="data.amount"></td>
 
 
                                         <td *ngIf="!isEdit">{{ data.size }}</td>

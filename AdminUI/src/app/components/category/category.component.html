@@ -29,7 +29,7 @@
                                     <nz-table #basicTable [nzData]="listCate">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
+                                                <th>STT</th>
                                                 <th>Code</th>
                                                 <th>Tên danh mục</th>
                                                 <th>Trạng thái</th>
@@ -37,13 +37,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let data of basicTable.data | filter:searchString">
-                                                <td>{{ data.category_id }}</td>
+                                            <tr *ngFor="let data of basicTable.data | filter:searchString ; let i = index">
+                                                <td>{{ i + 1}}</td>
                                                 <td>{{ data.category_code }}</td>
                                                 <td>{{ data.category_name }}</td>
                                                 <td
                                                     [style]="data.status == 1 ? 'font-weight: bold; color: green' : 'font-weight: bold;color:yellow'">
-                                                    {{data.status == 1 ? 'Mới' : 'Cũ'}}</td>
+                                                    {{data.status == 1 ? 'Hoạt động' : 'Không hoạt động'}}</td>
                                                 <td>
                                                     <button class="btn btn-sm btn-outline-warning" placement="left"
                                                         style="margin-right: 0.5rem;"

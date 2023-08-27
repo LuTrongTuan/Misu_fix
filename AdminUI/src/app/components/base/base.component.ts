@@ -174,7 +174,7 @@ export class BaseComponent {
       coupon: null,
       total: 0,
       payment_type: null,
-      bought_type: 'Tại cửa hàng',
+      bought_type: '',
       waiting: null,
       note: '',
       data_cart: ''
@@ -419,7 +419,7 @@ export class BaseComponent {
   addPhoneName(): boolean {
     if (this.customerShopping) {
       if (this.customerShopping == 'Khách lẻ') {
-        this.toastr.warning('Loại khách hàng này đã được thêm');
+        this.toastr.warning('Khách hàng này đã được thêm');
         return false;
       }
 
@@ -432,11 +432,11 @@ export class BaseComponent {
         }
       });
       if (countDup > 0) {
-        this.toastr.warning('Loại khách hàng đã được thêm');
+        this.toastr.warning('Khách hàng đã được thêm');
         return false;
       }
       this.listPhoneName.push(this.customerShopping);
-      this.toastr.success('Thành công');
+      this.toastr.success('Thành công thêm khách hàng');
       return false;
     }
     else {

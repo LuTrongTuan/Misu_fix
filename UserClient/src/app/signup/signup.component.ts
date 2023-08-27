@@ -11,9 +11,9 @@ export class SignupComponent extends BaseComponent implements OnInit {
 
   AddForm = new FormGroup({
     email: new FormControl(null, Validators.required),
-    user_name: new FormControl(null, Validators.required),
-    password: new FormControl(null, Validators.required),
-    confirm_password: new FormControl(null, Validators.required),
+    user_name: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[a-z])[a-z\d]{4,}$')]),
+    password: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{6,}$')]),
+    confirm_password: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{6,}$')]),
   })
   
   ngOnInit(): void {

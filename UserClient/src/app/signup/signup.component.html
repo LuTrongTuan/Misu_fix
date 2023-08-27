@@ -16,15 +16,39 @@
               <div class="form-group mb-4">
                 <label for="#">Username</label>
                 <a class="float-right" href=""></a>
-                <input type="text" class="form-control" formControlName="user_name" placeholder="Nhập username"> 
+                <input type="text" class="form-control" formControlName="user_name" placeholder="Nhập username">
+                <div *ngIf="addForm.controls['user_name'].hasError('required') && addForm.controls['user_name'].touched"
+                  style="color: red; font-size: 13px;">
+                  Username không được để trống.
+                </div>
+                <div *ngIf="addForm.controls['user_name'].hasError('pattern') && addForm.controls['user_name'].touched"
+                  style="color: red; font-size: 13px;">
+                  Username phải có ít nhất 4 kí tự 1 chữ thường và 1 chữ hoa.
+                </div>
               </div>
               <div class="form-group mb-4">
                 <label for="#">Mật khẩu</label>
-                <input type="password" class="form-control" placeholder="Nhập mật khẩu" formControlName="password"> 
+                <input type="password" class="form-control" placeholder="Nhập mật khẩu" formControlName="password">
+                <div *ngIf="addForm.controls['password'].hasError('required') && addForm.controls['password'].touched"
+                  style="color: red; font-size: 13px;">
+                  Mật khẩu không được để trống.
+                </div>
+                <div *ngIf="addForm.controls['password'].hasError('pattern') && addForm.controls['password'].touched"
+                  style="color: red; font-size: 13px;">
+                  Mật khẩu phải có ít nhất 6 kí tự và 1 chữ thường 1 chữ hoa.
+                </div>
               </div>
               <div class="form-group">
                 <label for="#">Xác nhận mật khẩu</label>
                 <input type="password" class="form-control" placeholder="Nhập lại mật khẩu" formControlName="confirm_password"> 
+                <div *ngIf="addForm.controls['confirm_password'].hasError('required') && addForm.controls['confirm_password'].touched"
+                  style="color: red; font-size: 13px;">
+                  Nhập lại mật khẩu không được để trống.
+                </div>
+                <div *ngIf="addForm.controls['confirm_password'].hasError('pattern') && addForm.controls['confirm_password'].touched"
+                  style="color: red; font-size: 13px;">
+                  Mật khẩu phải có ít nhất 6 kí tự và 1 chữ thường 1 chữ hoa.
+                </div>
               </div>
   
               <a href="javascript:void(0)" (click)="register()" class="btn btn-main mt-3 btn-block">Đăng ký</a>

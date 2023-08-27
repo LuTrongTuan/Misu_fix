@@ -19,9 +19,9 @@ export class ProfileDetailsComponent extends BaseComponent implements OnInit {
     town_id: new FormControl(`${this.infoUser?.town_id}`),
     district_id: new FormControl(this.infoUser?.district_id),
     city_id: new FormControl(this.infoUser?.city_id),
-    oldPassword: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$')]),
-    newPassword: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$')]),
-    confirmChangePassword: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$')]),
+    oldPassword: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{6,}$')]),
+    newPassword: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{6,}$')]),
+    confirmChangePassword: new FormControl(null, [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d]{6,}$')]),
    
   })
 

@@ -120,6 +120,8 @@ namespace ClothesShopMale.Controllers
                     acc.town_id = req.town_id;
                     acc.district_id = req.district_id;
                     acc.city_id = req.city_id;
+                    acc.password = req.password;
+                    acc.avatar = req.avatar;
                     db.SubmitChanges();
                 }
                 else

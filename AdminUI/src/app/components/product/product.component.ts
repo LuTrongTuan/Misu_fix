@@ -220,7 +220,7 @@ export class ProductComponent extends BaseComponent implements OnInit {
       this.AddForm.patchValue({
         status: 1,
       });
-      this.SKU_code = btoa(Math.random().toString()).slice(0, 5);
+      this.SKU_code = 'PR_' + btoa(Math.random().toString()).slice(0, 8);
     }
   }
 

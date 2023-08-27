@@ -42,6 +42,28 @@
           </span>
           <h4 class="text-section">Các thành phần chính</h4>
         </li>
+<li class="nav-item">
+  <a data-toggle="collapse" href="#submenu">
+    <i class="fa fa-user"></i>
+    <p>Quản lý tài khoản</p>
+    <span class="caret"></span>
+  </a>
+  <div class="collapse" id="submenu">
+    <ul class="nav nav-collapse">
+      <li>
+        <a data-toggle="collapse" [routerLink]="['/admin/role']" class="nav-link" routerLinkActive="active">
+          <span class="sub-item">Quyền</span>
+        </a>
+      </li>
+      <li>
+        <a data-toggle="collapse" [routerLink]="['/admin/account']" class="nav-link" routerLinkActive="active">
+          <span class="sub-item">Tài khoản</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</li>
+
         <li class="nav-item">
           <a data-toggle="collapse" [routerLink]="['/admin/category']" class="nav-link" routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }">
@@ -56,18 +78,19 @@
             <p>Thương hiệu</p>
           </a>
         </li>
-        <li class="nav-item">
-          <a data-toggle="collapse" [routerLink]="['/admin/order']" class="nav-link" routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }">
-            <i class="fa fa-bookmark"></i>
-            <p>Hoá đơn</p>
-          </a>
-        </li>
+      
         <li class="nav-item">
           <a data-toggle="collapse" [routerLink]="['/admin/product']" class="nav-link" routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }">
             <i class="fa fa-box"></i>
             <p>Sản phẩm</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a data-toggle="collapse" [routerLink]="['/admin/order']" class="nav-link" routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fa fa-bookmark"></i>
+            <p>Hoá đơn</p>
           </a>
         </li>
         <li class="nav-item">
@@ -97,27 +120,7 @@
             <p>Blog cá nhân</p>
           </a>
         </li>
-        <li class="nav-item">
-          <a data-toggle="collapse" href="#submenu">
-            <i class="fa fa-user"></i>
-            <p>Quản lý tài khoản</p>
-            <span class="caret"></span>
-          </a>
-          <div class="collapse" id="submenu">
-            <ul class="nav nav-collapse">
-              <li>
-                <a data-toggle="collapse" [routerLink]="['/admin/role']" class="nav-link" routerLinkActive="active">
-                  <span class="sub-item">Quyền</span>
-                </a>
-              </li>
-              <li>
-                <a data-toggle="collapse" [routerLink]="['/admin/account']" class="nav-link" routerLinkActive="active">
-                  <span class="sub-item">Tài khoản</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
+      
         <!-- <li class="nav-item">
           <a data-toggle="collapse" href="#submenuShop">
             <i class="fa fa-shopping-basket" aria-hidden="true"></i>

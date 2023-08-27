@@ -52,7 +52,7 @@ export class ProductsingleComponent extends BaseComponent implements OnInit {
     this.getListAccount();
     this.getlstProductRecommend();
     this.getListAllProduct();
-
+    console.log(JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('Cart')))));
     if (localStorage.getItem('UserInfo')) {
       this.accountId = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('UserInfo')))).account_id;
     }
@@ -156,8 +156,6 @@ export class ProductsingleComponent extends BaseComponent implements OnInit {
         account_id: dataAccount.account_id,
         createdTime: new Date().getTime(),
       };
-      
-      this.productService.minusAmount(cartItem).subscribe();
 
       this.cart = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('Cart'))));
       var cart = this.cart?.filter((l: any)=> l.account_id === cartItem.account_id);
@@ -182,6 +180,7 @@ export class ProductsingleComponent extends BaseComponent implements OnInit {
         this.cart.push(cartItem);
       }
       localStorage.setItem('Cart', JSON.stringify(this.cart));
+      this.productService.minusAmount(cartItem).subscribe();
       this.toastr.success('Thêm giỏ hàng thành công !');
       setTimeout(window.location.reload.bind(window.location), 250);
       

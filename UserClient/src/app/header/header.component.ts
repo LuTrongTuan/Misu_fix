@@ -26,12 +26,37 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     const currentTime = new Date().getTime();
     const expirationTime = 5 * 60 * 1000; // 5 phút tính bằng mili giây
 
-    this.cartInfo = this.cartInfo.filter((x: any) => (currentTime - x.createdTime) < expirationTime);
+    if(this.cartInfo?.filter((x: any) => x.createdTime) != ''){
+      if(this.cartInfo?.filter((x: any) => (currentTime - x.createdTime) > expirationTime) != ''){
+        var req = {
+          full_name: null,
+          address: null,
+          phone: null,
+          note: null,
+          order_item: JSON.stringify(this.cartInfo),
+          type_payment: null,
+          status: null,
+          account_id: null,
+          fee_ship: null,
+          id_city: null,
+          id_district: null,
+          id_ward: null,
+          total: null,
+          type: null,
+        }
+        this.productService.increasesAmountCart(req).subscribe();
+      }
+      
+    }
+
+    this.cartInfo = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem('Cart'))));
+
+    this.cartInfo = this.cartInfo?.filter((x: any) => (currentTime - x.createdTime) < expirationTime);
     localStorage.setItem('Cart', JSON.stringify(this.cartInfo));
 
-    this.cartInfo =  this.cartInfo.filter((c: any) => c. account_id === this.dataAccount.account_id);
+    this.cartInfo =  this.cartInfo?.filter((c: any) => c. account_id === this.dataAccount.account_id);
    
-    this.cartInfo.forEach((c: any) => {
+    this.cartInfo?.forEach((c: any) => {
       this.totalPrice += c.amountCart * c.price;
     })
   }
